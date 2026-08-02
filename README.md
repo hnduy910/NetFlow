@@ -58,8 +58,8 @@ NetFlow is intended to keep usage information on the device. The Settings screen
 
 ## Requirements
 
-- macOS with Xcode 16 or later
-- iOS 18 or later
+- macOS with Xcode 15 or later
+- iOS 16 or later
 - A compatible iPhone, iPad, or Simulator
 
 The exact deployment target and signing requirements are defined by the Xcode project.
