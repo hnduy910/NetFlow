@@ -1,0 +1,153 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A20000000000000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000011 /* Assets.xcassets */; };
+		A10000000000000000000001 /* SystemCapabilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000011 /* SystemCapabilities.swift */; };
+		A10000000000000000000002 /* SystemCapabilitiesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000012 /* SystemCapabilitiesService.swift */; };
+		A10000000000000000000003 /* SystemCapabilitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000013 /* SystemCapabilitiesView.swift */; };
+		A10000000000000000000004 /* AppChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000014 /* AppChrome.swift */; };
+		40B986A4B04DA1316E6B0134 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110D6E0C411424287D6B4383 /* AppStore.swift */; };
+		521902CA3B6BBBBC62DB2FA7 /* NetFlowApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66562ACE246E64C5DC7BAB8 /* NetFlowApp.swift */; };
+		8A359A8D84E62D35FDB66F1B /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC9E8391260445C27D7B3B6 /* AppSettings.swift */; };
+		542DF0191ACA2810C131B99D /* DailyUsageRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441E52EC685FFBB032603AFE /* DailyUsageRecord.swift */; };
+		D2270CD05B2FC1D0A67EB411 /* DataPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93ABC57C6E92AEA46AC41EEA /* DataPlan.swift */; };
+		63D66C18AB73E0DFC9C660E4 /* NetworkModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9838A47C52DE0F97CABAA5A /* NetworkModels.swift */; };
+		BC9527A9ADE6C0FC9B6A5634 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0952488F06B9BB27E4C1805B /* Formatters.swift */; };
+		5FAC6EEEB74132BBCD72AAAB /* NetworkInterfaceReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBF058E2145E41C77EB776F /* NetworkInterfaceReader.swift */; };
+		837828955A4C7990199751CB /* PDFReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A871A031C18E978F340BCBB3 /* PDFReportService.swift */; };
+		A05DF6A196B78DA6CAAF43DD /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD0413EDA45418DC162C1CF /* PersistenceService.swift */; };
+		1CA042ED5DD90E6E6B21E4AE /* UsageTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28136BB7EE90119A071A64F /* UsageTracker.swift */; };
+		752CB43A93A37FC248AE24CE /* UsageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8CC3259B859AD4BAA7DCD8 /* UsageCard.swift */; };
+		40D1A72FF577054CC672548B /* DataPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A88F37D24373DB0F8240DD3 /* DataPlanView.swift */; };
+		A884142D17D4815F9779EDCC /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5659AAB40BAC31935CB6B45A /* HistoryView.swift */; };
+		7C633070DB01638B975AE4E9 /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7030CDE8DAA0697FD42DB49 /* OverviewView.swift */; };
+		ECA2504668DE0828127450F0 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2200878E94C30216487A4A30 /* RootTabView.swift */; };
+		4AB6E687D2B790F2BC3AD3A8 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD3576ED0D323BFF727B1AF /* SettingsView.swift */; };
+		BC489C0029FE233D12E3211D /* en.lproj/Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BDB39C484F75B9A3E177C1A9; };
+		17ACAC1695DCD4C77F44DD8E /* vi.lproj/Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0684AA56AE94CD2625756DAA; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A20000000000000000000011 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "NetFlow/Resources/Assets.xcassets"; sourceTree = "<group>"; };
+		A10000000000000000000011 /* SystemCapabilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Models/SystemCapabilities.swift"; sourceTree = "<group>"; };
+		A10000000000000000000012 /* SystemCapabilitiesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Services/SystemCapabilitiesService.swift"; sourceTree = "<group>"; };
+		A10000000000000000000013 /* SystemCapabilitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Views/System/SystemCapabilitiesView.swift"; sourceTree = "<group>"; };
+		A10000000000000000000014 /* AppChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Views/Components/AppChrome.swift"; sourceTree = "<group>"; };
+		110D6E0C411424287D6B4383 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/App/AppStore.swift"; sourceTree = "<group>"; };
+		E66562ACE246E64C5DC7BAB8 /* NetFlowApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/App/NetFlowApp.swift"; sourceTree = "<group>"; };
+		2BC9E8391260445C27D7B3B6 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Models/AppSettings.swift"; sourceTree = "<group>"; };
+		441E52EC685FFBB032603AFE /* DailyUsageRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Models/DailyUsageRecord.swift"; sourceTree = "<group>"; };
+		93ABC57C6E92AEA46AC41EEA /* DataPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Models/DataPlan.swift"; sourceTree = "<group>"; };
+		B9838A47C52DE0F97CABAA5A /* NetworkModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Models/NetworkModels.swift"; sourceTree = "<group>"; };
+		0952488F06B9BB27E4C1805B /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Services/Formatters.swift"; sourceTree = "<group>"; };
+		1CBF058E2145E41C77EB776F /* NetworkInterfaceReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Services/NetworkInterfaceReader.swift"; sourceTree = "<group>"; };
+		A871A031C18E978F340BCBB3 /* PDFReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Services/PDFReportService.swift"; sourceTree = "<group>"; };
+		7CD0413EDA45418DC162C1CF /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Services/PersistenceService.swift"; sourceTree = "<group>"; };
+		F28136BB7EE90119A071A64F /* UsageTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Services/UsageTracker.swift"; sourceTree = "<group>"; };
+		1F8CC3259B859AD4BAA7DCD8 /* UsageCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Views/Components/UsageCard.swift"; sourceTree = "<group>"; };
+		9A88F37D24373DB0F8240DD3 /* DataPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Views/DataPlan/DataPlanView.swift"; sourceTree = "<group>"; };
+		5659AAB40BAC31935CB6B45A /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Views/History/HistoryView.swift"; sourceTree = "<group>"; };
+		E7030CDE8DAA0697FD42DB49 /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Views/Overview/OverviewView.swift"; sourceTree = "<group>"; };
+		2200878E94C30216487A4A30 /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Views/RootTabView.swift"; sourceTree = "<group>"; };
+		1FD3576ED0D323BFF727B1AF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Views/Settings/SettingsView.swift"; sourceTree = "<group>"; };
+		BDB39C484F75B9A3E177C1A9 /* en.lproj/Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = "NetFlow/Resources/en.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		0684AA56AE94CD2625756DAA /* vi.lproj/Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = "NetFlow/Resources/vi.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D00000000000000000000001 /* NetFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D00000000000000000000007 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D00000000000000000000003 = {isa = PBXGroup; children = (
+				A20000000000000000000011 /* Assets.xcassets */,
+				A10000000000000000000011 /* SystemCapabilities.swift */,
+				A10000000000000000000012 /* SystemCapabilitiesService.swift */,
+				A10000000000000000000013 /* SystemCapabilitiesView.swift */,
+				A10000000000000000000014 /* AppChrome.swift */,
+				110D6E0C411424287D6B4383 /* AppStore.swift */,
+				E66562ACE246E64C5DC7BAB8 /* NetFlowApp.swift */,
+				2BC9E8391260445C27D7B3B6 /* AppSettings.swift */,
+				441E52EC685FFBB032603AFE /* DailyUsageRecord.swift */,
+				93ABC57C6E92AEA46AC41EEA /* DataPlan.swift */,
+				B9838A47C52DE0F97CABAA5A /* NetworkModels.swift */,
+				0952488F06B9BB27E4C1805B /* Formatters.swift */,
+				1CBF058E2145E41C77EB776F /* NetworkInterfaceReader.swift */,
+				A871A031C18E978F340BCBB3 /* PDFReportService.swift */,
+				7CD0413EDA45418DC162C1CF /* PersistenceService.swift */,
+				F28136BB7EE90119A071A64F /* UsageTracker.swift */,
+				1F8CC3259B859AD4BAA7DCD8 /* UsageCard.swift */,
+				9A88F37D24373DB0F8240DD3 /* DataPlanView.swift */,
+				5659AAB40BAC31935CB6B45A /* HistoryView.swift */,
+				E7030CDE8DAA0697FD42DB49 /* OverviewView.swift */,
+				2200878E94C30216487A4A30 /* RootTabView.swift */,
+				1FD3576ED0D323BFF727B1AF /* SettingsView.swift */,
+				BDB39C484F75B9A3E177C1A9 /* Localizable.strings */,
+				0684AA56AE94CD2625756DAA /* Localizable.strings */,
+				D00000000000000000000004 /* Products */,
+			); sourceTree = "<group>"; };
+		D00000000000000000000004 /* Products */ = {isa = PBXGroup; children = (D00000000000000000000001 /* NetFlow.app */,); name = Products; sourceTree = "<group>"; };
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D00000000000000000000005 /* NetFlow */ = {isa = PBXNativeTarget; buildConfigurationList = D0000000000000000000000A; buildPhases = (D00000000000000000000006,D00000000000000000000007,D00000000000000000000008); buildRules = (); dependencies = (); name = NetFlow; productName = NetFlow; productReference = D00000000000000000000001; productType = "com.apple.product-type.application"; };
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D00000000000000000000002 /* Project object */ = {isa = PBXProject; attributes = {BuildIndependentTargetsInParallel = 1; LastSwiftUpdateCheck = 1600; LastUpgradeCheck = 1600; TargetAttributes = {D00000000000000000000005 = {CreatedOnToolsVersion = 16.0; }; }; }; buildConfigurationList = D00000000000000000000009; compatibilityVersion = "Xcode 14.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base, vi); mainGroup = D00000000000000000000003; productRefGroup = D00000000000000000000004; projectDirPath = ""; projectRoot = ""; targets = (D00000000000000000000005); };
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D00000000000000000000008 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (
+				A20000000000000000000001 /* Assets.xcassets in Resources */,
+				BC489C0029FE233D12E3211D /* en.lproj/Localizable.strings in Resources */,
+				17ACAC1695DCD4C77F44DD8E /* vi.lproj/Localizable.strings in Resources */,
+			); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D00000000000000000000006 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (
+				A10000000000000000000001 /* SystemCapabilities.swift in Sources */,
+				A10000000000000000000002 /* SystemCapabilitiesService.swift in Sources */,
+				A10000000000000000000003 /* SystemCapabilitiesView.swift in Sources */,
+				A10000000000000000000004 /* AppChrome.swift in Sources */,
+				40B986A4B04DA1316E6B0134 /* AppStore.swift in Sources */,
+				521902CA3B6BBBBC62DB2FA7 /* NetFlowApp.swift in Sources */,
+				8A359A8D84E62D35FDB66F1B /* AppSettings.swift in Sources */,
+				542DF0191ACA2810C131B99D /* DailyUsageRecord.swift in Sources */,
+				D2270CD05B2FC1D0A67EB411 /* DataPlan.swift in Sources */,
+				63D66C18AB73E0DFC9C660E4 /* NetworkModels.swift in Sources */,
+				BC9527A9ADE6C0FC9B6A5634 /* Formatters.swift in Sources */,
+				5FAC6EEEB74132BBCD72AAAB /* NetworkInterfaceReader.swift in Sources */,
+				837828955A4C7990199751CB /* PDFReportService.swift in Sources */,
+				A05DF6A196B78DA6CAAF43DD /* PersistenceService.swift in Sources */,
+				1CA042ED5DD90E6E6B21E4AE /* UsageTracker.swift in Sources */,
+				752CB43A93A37FC248AE24CE /* UsageCard.swift in Sources */,
+				40D1A72FF577054CC672548B /* DataPlanView.swift in Sources */,
+				A884142D17D4815F9779EDCC /* HistoryView.swift in Sources */,
+				7C633070DB01638B975AE4E9 /* OverviewView.swift in Sources */,
+				ECA2504668DE0828127450F0 /* RootTabView.swift in Sources */,
+				4AB6E687D2B790F2BC3AD3A8 /* SettingsView.swift in Sources */,
+			); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D0000000000000000000000B = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; SDKROOT = iphoneos; IPHONEOS_DEPLOYMENT_TARGET = 16.0; }; name = Debug; };
+		D0000000000000000000000C = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; SDKROOT = iphoneos; IPHONEOS_DEPLOYMENT_TARGET = 16.0; SWIFT_COMPILATION_MODE = wholemodule; }; name = Release; };
+		D0000000000000000000000D = {isa = XCBuildConfiguration; buildSettings = {ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; CODE_SIGN_ENTITLEMENTS = NetFlow/NetFlow.entitlements; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 22; DEVELOPMENT_TEAM = ""; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = NetFlow/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 16.0; MARKETING_VERSION = 4.1.6; PRODUCT_BUNDLE_IDENTIFIER = com.duyhoang.netflow; PRODUCT_NAME = "$(TARGET_NAME)"; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_STRICT_CONCURRENCY = minimal; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; }; name = Debug; };
+		D0000000000000000000000E = {isa = XCBuildConfiguration; buildSettings = {ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; CODE_SIGN_ENTITLEMENTS = NetFlow/NetFlow.entitlements; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 22; DEVELOPMENT_TEAM = ""; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = NetFlow/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 16.0; MARKETING_VERSION = 4.1.6; PRODUCT_BUNDLE_IDENTIFIER = com.duyhoang.netflow; PRODUCT_NAME = "$(TARGET_NAME)"; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_STRICT_CONCURRENCY = minimal; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; VALIDATE_PRODUCT = YES; }; name = Release; };
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D00000000000000000000009 = {isa = XCConfigurationList; buildConfigurations = (D0000000000000000000000B,D0000000000000000000000C); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		D0000000000000000000000A = {isa = XCConfigurationList; buildConfigurations = (D0000000000000000000000D,D0000000000000000000000E); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End XCConfigurationList section */
+	};
+	rootObject = D00000000000000000000002 /* Project object */;
+}

@@ -1,0 +1,9 @@
+import SwiftUI
+struct RootTabView: View {
+    @EnvironmentObject var store: AppStore
+    @Environment(\.horizontalSizeClass) private var sizeClass
+    @State private var selection: Destination? = .overview
+    enum Destination:String,CaseIterable,Identifiable { case overview,history,dataPlan,system,settings; var id:String{rawValue}; var title:LocalizedStringKey { switch self { case .overview:return "overview"; case .history:return "history"; case .dataPlan:return "data_plan"; case .system:return "system_information"; case .settings:return "settings" } }; var icon:String { switch self { case .overview:return "speedometer"; case .history:return "chart.bar.xaxis"; case .dataPlan:return "simcard.2"; case .system:return "checkmark.shield"; case .settings:return "gearshape" } } }
+    var body: some View { if sizeClass == .regular { NavigationSplitView { List(Destination.allCases,selection:$selection){ Label($0.title,systemImage:$0.icon).tag($0) }.navigationTitle("NetFlow") } detail: { NavigationStack { detail(selection ?? .overview) } } } else { TabView { NavigationStack{OverviewView(context:store.networkContext)}.tabItem{Label("overview",systemImage:Destination.overview.icon)}; NavigationStack{HistoryView()}.tabItem{Label("history",systemImage:Destination.history.icon)}; NavigationStack{DataPlanView()}.tabItem{Label("data_plan",systemImage:Destination.dataPlan.icon)}; NavigationStack{SystemCapabilitiesView()}.tabItem{Label("system_information",systemImage:Destination.system.icon)}; NavigationStack{SettingsView()}.tabItem{Label("settings",systemImage:Destination.settings.icon)} } } }
+    @ViewBuilder private func detail(_ value:Destination)->some View { switch value { case .overview:OverviewView(context:store.networkContext); case .history:HistoryView(); case .dataPlan:DataPlanView(); case .system:SystemCapabilitiesView(); case .settings:SettingsView() } }
+}

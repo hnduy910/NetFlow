@@ -1,0 +1,59 @@
+NetFlow Universal v3.2 Build Ready
+
+Required:
+1. Xcode 15 or newer.
+2. Select an Apple Development Team.
+3. Use a unique bundle identifier if needed.
+4. Build for iOS/iPadOS 16.0 or later.
+
+Included fixes:
+- Assets.xcassets and AppIcon are part of the Resources phase.
+- Darwin import added for getifaddrs/if_data definitions.
+- Local notification authorization and usage alerts implemented.
+- Sampling pauses in background and refreshes when app becomes active.
+- Info.plist includes encryption declaration and AppIcon name.
+- project.yml excludes preview images from the app bundle.
+
+Optional capability:
+- Access WiFi Information for SSID. Enable only if the signing profile supports it.
+
+No external dependency is required.
+
+APP ICON UPDATE (v3.2)
+- Integrated NetFlow / Ad879 icon into Assets.xcassets/AppIcon.appiconset.
+- Source icon is a 1024x1024 opaque PNG with a white square background.
+- No pre-rounded corners or transparency; iOS applies the correct device mask automatically.
+- ASSETCATALOG_COMPILER_APPICON_NAME remains set to AppIcon for Debug and Release.
+
+v3.6:
+- Add NetFlow/NetFlow.entitlements with Access WiFi Information.
+- VPN status now requires an active tunnel plus scoped system-network confirmation.
+- Public IPv4 and IPv6 are fetched separately.
+- Weather/place use current Core Location only.
+- Carrier name uses CoreTelephony when iOS exposes it.
+
+v4.1 audit:
+- iOS 16-compatible toolbar placements.
+- XcodeGen entitlement/config synchronization.
+- Swift 5 minimal strict concurrency setting for Xcode 16.
+
+
+PERSONAL TEAM FIX:
+- Removed com.apple.developer.networking.wifi-info entitlement.
+- Do not add Access Wi-Fi Information capability when signing with a Personal Team.
+- SSID may be unavailable; all other core features remain buildable.
+
+V4.1 NETWORK READER FIX:
+- Rewritten NetworkInterfaceReader.swift.
+- Removed restricted SSID APIs from Personal Team build.
+- Fixed Darwin ifaddrs pointer handling and CoreLocation delegate isolation.
+
+NETFLOW 4.1 CHANGES
+- Replaced the circular usage chart with compact decimal Used / Remaining values.
+- Usage values follow the selected plan unit (MB, GB, or TB).
+- Improved VPN detection by requiring an active scoped tunnel, with NWPath .other fallback.
+- Added VPN tunnel local IP when available.
+- Data-plan capacity keyboard dismisses by tapping outside, scrolling, or tapping Done.
+- Added last-updated time and unified refresh action on Overview.
+
+V4.1: compact Day/Month/Year cycle picker; Last Updated moved to overview top.
