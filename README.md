@@ -1,109 +1,97 @@
-# NetFlow Universal v4.1.8 (Build 24)
+# NetFlow
 
-Ứng dụng SwiftUI iOS/iPadOS 16+ theo dõi tổng lưu lượng Wi‑Fi và dữ liệu di động, quản lý gói ngày/tháng/năm, cảnh báo và xuất PDF chi tiết từng ngày.
+> Monitor Wi‑Fi and Cellular data usage with a clean, native SwiftUI experience.
 
-## Bản phát hành 4.1.8 (Build 24)
+NetFlow is an open-source iPhone and iPad app for understanding network usage, managing data plans, reviewing usage history, and exporting usage reports. It is designed around Apple's native UI patterns and keeps the experience simple, readable, and privacy-conscious.
 
-- Một mã nguồn và một IPA có thể tự thích nghi theo **khả năng thực tế** của môi trường cài đặt.
-- Trang **Khả năng hệ thống** kiểm tra thông báo, làm mới nền, vị trí, SSID, IP công cộng, VPN, Widget và Live Activities.
-- Không đoán LiveContainer/TrollStore bằng đường dẫn riêng tư; ứng dụng bật/tắt UI theo quyền/API đang hoạt động.
-- Giao diện Universal: TabView trên iPhone, NavigationSplitView trên iPad.
-- Giữ mặc định **không chuyển dung lượng dư** sang chu kỳ mới.
-- Hoàn thiện bản dịch tiếng Anh cho toàn bộ giao diện, bao gồm Cài đặt.
-- Hiển thị version, build number và ngày giờ build trong mục Giới thiệu.
-- Tiêu đề điều hướng cập nhật đúng theo ngôn ngữ đã chọn.
-- Vị trí chỉ hiển thị xã/phường và tỉnh/thành, không hiển thị tên đường hoặc tiền tố hành chính.
+## Features
 
-### Tải xuống
+- Wi‑Fi and Cellular usage summaries
+- Current connection status, local/public IP information, VPN status, and transfer speed
+- Daily, monthly, and yearly usage views
+- Data-plan limits with reset-day and carry-over options
+- Usage alerts for percentage and remaining-data thresholds
+- Monthly and yearly PDF report export
+- English and Vietnamese language support
+- Light, dark, and system appearance options
+- Local data management with a clear-data action
 
-- [IPA 4.1.8 (Build 24)](./NetFlow_Universal_v4_1_8_build24.ipa)
-- IPA chưa ký chứng chỉ; dùng AltStore, SideStore, Sideloadly hoặc TrollStore để cài trên thiết bị.
+## Screenshots
 
-## Giới hạn cần hiểu đúng
+The screenshots below are original PNG captures supplied for NetFlow. The four Simulator captures retain their original 1320 × 2868 resolution; the System Capabilities capture retains its original 1260 × 2736 resolution. All images are referenced using repository-relative paths so they render on GitHub.
 
-Một IPA không thể tự sinh entitlement sau khi đã ký. Widget, Live Activities, Access WiFi Information, App Groups hoặc Network Extension chỉ hoạt động khi target tương ứng tồn tại và chữ ký/provisioning giữ được entitlement. LiveContainer có thể chạy app chính nhưng thường không chạy đầy đủ app extension. TrollStore hoặc chứng chỉ phù hợp có thể giữ được nhiều khả năng hơn.
+| Dashboard | History |
+| --- | --- |
+| ![NetFlow Dashboard](docs/images/dashboard.png) | ![NetFlow History](docs/images/history.png) |
 
-## Build
+| Data Plan | Settings |
+| --- | --- |
+| ![NetFlow Data Plan](docs/images/plan.png) | ![NetFlow Settings](docs/images/settings.png) |
 
-1. Mở `NetFlow.xcodeproj` bằng Xcode 15/16.
-2. Chọn Development Team và Bundle Identifier riêng.
-3. Build trên thiết bị thật để kiểm tra bộ đếm mạng, SSID và trạng thái nền.
-4. Có thể tái tạo project bằng XcodeGen từ `project.yml`.
+| System Capabilities |
+| --- |
+| ![NetFlow System Capabilities](docs/images/capabilities.png) |
 
-Không dùng CocoaPods hay thư viện ngoài.
+### Screenshot coverage
 
+The current documentation package contains five screens:
 
-## Build-ready v3.2
+- Dashboard — `docs/images/dashboard.png`
+- History — `docs/images/history.png`
+- Data Plan — `docs/images/plan.png`
+- Settings — `docs/images/settings.png`
+- System Capabilities — `docs/images/capabilities.png`
 
-- Open `NetFlow.xcodeproj` in Xcode 15 or later.
-- Select target **NetFlow** → **Signing & Capabilities** → choose your Team.
-- Change the bundle identifier if `com.duyhoang.netflow` is already used.
-- App icon asset catalog is now included in the target resources.
-- Notification permission is requested on first launch and threshold alerts create local notifications.
-- For Wi-Fi SSID, optionally add **Access WiFi Information** capability. Do not enable it when the signing profile does not support that entitlement.
-- No third-party packages are required.
+## Privacy
 
-The app does not claim continuous background sampling. iOS may suspend it; totals are reconciled when it becomes active again.
+NetFlow is intended to keep usage information on the device. The Settings screen states that the app does not record browsing content or send usage data to a server. No account is required to use the app.
 
+## Built with
 
-## LiveContainer compatibility fix (v3.6)
+- Swift
+- SwiftUI
+- Charts
+- PDFKit
+- Network framework
+- UserNotifications
+- Apple's native iOS and iPadOS APIs
 
-The custom Info.plist now explicitly contains `CFBundleExecutable`, `CFBundleIdentifier`, `CFBundleName`, `CFBundlePackageType`, version keys and iOS bundle metadata. This prevents direct IPA loaders from resolving the executable as `(null)` and showing `Failed to map ... (null): Bad file descriptor`.
+## Requirements
 
-After Archive/export, verify that `Payload/NetFlow.app/Info.plist` contains `CFBundleExecutable = NetFlow` and that `Payload/NetFlow.app/NetFlow` exists.
+- macOS with Xcode 16 or later
+- iOS 18 or later
+- A compatible iPhone, iPad, or Simulator
 
+The exact deployment target and signing requirements are defined by the Xcode project.
 
-## v3.6 compile fix
+## Getting started
 
-- Fixed `SystemCapabilitiesService` references to Wi-Fi path, public IP and VPN state.
-- Added stable compatibility accessors on `NetworkContextService`.
-- Prevents the three Xcode errors: `pathUsesWiFi`, `publicIPAddress`, and `vpnConnected` not found.
+1. Clone or download this repository.
+2. Open the Xcode project or workspace.
+3. Select an iPhone, iPad, or Simulator destination.
+4. Select a development team if signing is required.
+5. Build and run with **Product → Run** (`⌘R`).
 
+Network and cellular values can differ between Simulator and a physical device. Use a physical iPhone when validating device-only networking behavior.
 
-## Thay đổi v3.6
-- Phát hiện VPN nghiêm ngặt hơn để tránh báo kết nối sai do giao diện utun không hoạt động.
-- Hiển thị riêng IP công cộng IPv4 và IPv6.
-- Thời tiết và tên địa điểm chỉ lấy từ vị trí hiện tại bằng Core Location.
-- Bổ sung tên nhà mạng bằng CoreTelephony khi iOS cung cấp.
-- Bổ sung entitlement Access WiFi Information và cơ chế đọc SSID bằng NEHotspotNetwork.
-- Dung lượng gói hỗ trợ MB, GB, TB; mặc định GB.
-- Tổng quan hiển thị chu kỳ và dung lượng gói bằng màu xanh lá.
+## Repository layout
 
-## v3.7 – Xcode build audit
+```text
+.
+├── README.md
+└── docs/
+    └── images/
+        ├── dashboard.png
+        ├── history.png
+        ├── plan.png
+        ├── capabilities.png
+        └── settings.png
+```
 
-- Replaced `ToolbarItemPlacement.topBarTrailing` with `navigationBarTrailing` for reliable iOS 16 compilation.
-- Synchronized `project.yml` with the Wi-Fi entitlement, version and build number.
-- Added `SWIFT_STRICT_CONCURRENCY = minimal` so Xcode 16 builds the Swift 5 code without Swift 6 concurrency diagnostics becoming blocking errors.
-- Verified every Swift source is included in Compile Sources and all localization/icon resources are included in Copy Bundle Resources.
+## Contributing
 
+Bug reports, documentation improvements, and focused pull requests are welcome. Please describe the device/Simulator, OS version, Xcode version, and steps to reproduce when reporting an issue.
 
-## Personal Development Team
+## License
 
-Bản v4.0 mặc định không khai báo entitlement `com.apple.developer.networking.wifi-info`,
-vì Apple Personal Development Team không hỗ trợ quyền này.
-
-Kết quả:
-- Xcode có thể tự tạo provisioning profile cho chứng chỉ cá nhân.
-- Ứng dụng vẫn theo dõi lưu lượng, IP, VPN, vị trí, thời tiết, nhà mạng và xuất PDF.
-- Tên Wi-Fi có thể hiển thị `Không khả dụng` nếu iOS không cho phép đọc SSID.
-- Không cần bật Access Wi-Fi Information trong Signing & Capabilities.
-
-Nếu sau này dùng tài khoản Apple Developer trả phí và App ID hỗ trợ quyền này,
-có thể thêm lại capability Access Wi-Fi Information thủ công.
-
-
-## v4.0 – NetworkInterfaceReader compile fix
-
-- Viết lại hoàn toàn `NetworkInterfaceReader.swift` bằng API iOS 16 ổn định.
-- Loại bỏ `NetworkExtension`, `NEHotspotNetwork` và CaptiveNetwork khỏi bản Personal Team.
-- Sửa cách đọc `ifa_data`, `ifaddrs`, địa chỉ IPv4/IPv6 và cờ giao diện.
-- Tách `CLLocationManagerDelegate` thành extension `nonisolated` để tránh lỗi actor isolation.
-- Giữ SSID ở trạng thái không khả dụng thay vì gọi API cần entitlement không được Personal Team hỗ trợ.
-
-
-## Thay đổi v4.1
-
-- Chuyển “Cập nhật lần cuối” lên đầu trang Tổng quan.
-- Chu kỳ là menu gọn với đúng 3 lựa chọn: Ngày, Tháng, Năm.
-- Dữ liệu cũ dùng chu kỳ Tùy chỉnh/Không giới hạn sẽ được chuyển an toàn về Tháng khi mở trang Gói dữ liệu.
-- Giữ thao tác chạm ra ngoài hoặc bấm Xong để ẩn bàn phím.
+NetFlow is distributed under the license included in the repository. Keep the existing `LICENSE` file at the repository root when uploading this documentation package.
