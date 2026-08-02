@@ -92,6 +92,8 @@ Network and cellular values can differ between Simulator and a physical device. 
 
 Bug reports, documentation improvements, and focused pull requests are welcome. Please describe the device/Simulator, OS version, Xcode version, and steps to reproduce when reporting an issue.
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow, [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for community expectations, and [SECURITY.md](SECURITY.md) for private vulnerability reporting.
+
 ## License
 
 NetFlow is distributed under the license included in the repository. Keep the existing `LICENSE` file at the repository root when uploading this documentation package.
