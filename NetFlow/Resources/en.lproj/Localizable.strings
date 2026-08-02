@@ -28,7 +28,7 @@
 "add_remaining_alert" = "Add Remaining Data Alert";
 "language" = "Language";
 "system" = "System";
-"vietnamese" = "Tiếng Việt";
+"vietnamese" = "Vietnamese";
 "english" = "English";
 "appearance" = "Appearance";
 "light" = "Light";
@@ -126,6 +126,7 @@
 "rain_probability" = "Rain chance";
 "about" = "About";
 "version" = "Version";
+"build" = "Build";
 "build_date" = "Build date";
 "author" = "Author";
 "unknown" = "Unknown";

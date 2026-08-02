@@ -1,14 +1,23 @@
-# NetFlow Universal v4.1
+# NetFlow Universal v4.1.8 (Build 24)
 
 Ứng dụng SwiftUI iOS/iPadOS 16+ theo dõi tổng lưu lượng Wi‑Fi và dữ liệu di động, quản lý gói ngày/tháng/năm, cảnh báo và xuất PDF chi tiết từng ngày.
 
-## Điểm mới v3
+## Bản phát hành 4.1.8 (Build 24)
 
 - Một mã nguồn và một IPA có thể tự thích nghi theo **khả năng thực tế** của môi trường cài đặt.
 - Trang **Khả năng hệ thống** kiểm tra thông báo, làm mới nền, vị trí, SSID, IP công cộng, VPN, Widget và Live Activities.
 - Không đoán LiveContainer/TrollStore bằng đường dẫn riêng tư; ứng dụng bật/tắt UI theo quyền/API đang hoạt động.
 - Giao diện Universal: TabView trên iPhone, NavigationSplitView trên iPad.
 - Giữ mặc định **không chuyển dung lượng dư** sang chu kỳ mới.
+- Hoàn thiện bản dịch tiếng Anh cho toàn bộ giao diện, bao gồm Cài đặt.
+- Hiển thị version, build number và ngày giờ build trong mục Giới thiệu.
+- Tiêu đề điều hướng cập nhật đúng theo ngôn ngữ đã chọn.
+- Vị trí chỉ hiển thị xã/phường và tỉnh/thành, không hiển thị tên đường hoặc tiền tố hành chính.
+
+### Tải xuống
+
+- [IPA 4.1.8 (Build 24)](./NetFlow_Universal_v4_1_8_build24.ipa)
+- IPA chưa ký chứng chỉ; dùng AltStore, SideStore, Sideloadly hoặc TrollStore để cài trên thiết bị.
 
 ## Giới hạn cần hiểu đúng
 

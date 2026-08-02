@@ -65,7 +65,8 @@ final class NetworkContextService: NSObject, ObservableObject {
         super.init()
 
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = kCLDistanceFilterNone
 
         pathMonitor.pathUpdateHandler = { [weak self] path in
             Task { @MainActor in
@@ -263,7 +264,10 @@ final class NetworkContextService: NSObject, ObservableObject {
         do {
             let approximate = try await Self.fetchApproximateNetworkLocation(locale: appLocale)
             let values = try await Self.fetchOpenMeteo(for: approximate.location)
-            weather.locationName = approximate.displayName
+            weather.locationName = (try? await Self.reverseGeocodeWithOSM(
+                approximate.location,
+                locale: appLocale
+            )) ?? approximate.displayName
             weather.temperatureCelsius = values.temperature
             weather.conditionCode = values.code
             weather.precipitationProbability = values.rainProbability
@@ -276,14 +280,22 @@ final class NetworkContextService: NSObject, ObservableObject {
     }
 
     private func displayLocationName(from placemark: CLPlacemark) -> String {
-        let wardOrCommune = Self.cleanedVietnameseAdministrativeName(
-            placemark.subLocality ?? placemark.locality
-        )
-        let province = Self.cleanedVietnameseAdministrativeName(
-            placemark.administrativeArea ?? placemark.subAdministrativeArea
-        )
+        let commune = [
+            placemark.subLocality,
+            placemark.locality,
+            placemark.subAdministrativeArea
+        ]
+            .compactMap { Self.cleanedVietnameseAdministrativeName($0) }
+            .first
+        let province = [
+            placemark.administrativeArea,
+            placemark.subAdministrativeArea,
+            placemark.locality
+        ]
+            .compactMap { Self.cleanedVietnameseAdministrativeName($0) }
+            .first
 
-        let parts = [wardOrCommune, province].compactMap { $0 }.removingDuplicates()
+        let parts = [commune, province].compactMap { $0 }.removingDuplicates()
         if !parts.isEmpty {
             return parts.joined(separator: ", ")
         }
@@ -302,10 +314,14 @@ final class NetworkContextService: NSObject, ObservableObject {
         }
 
         let prefixes = [
-            "xã", "x.", "xa",
-            "phường", "p.",
-            "thị trấn", "tt.",
-            "tỉnh", "tp.", "thành phố"
+            "xã", "x.", "xa", "xa.",
+            "phường", "p.", "phuong", "phuong.",
+            "thị trấn", "tt.", "thi tran",
+            "quận", "q.", "quan", "huyện", "h.", "huyen",
+            "thị xã", "tx.", "thi xa", "district", "county",
+            "ward", "commune", "town",
+            "tỉnh", "t.", "tinh", "tp.", "tp",
+            "thành phố", "thanh pho", "province of", "city of", "province", "city"
         ]
 
         var didStrip = true
@@ -320,6 +336,12 @@ final class NetworkContextService: NSObject, ObservableObject {
                 break
             }
         }
+
+        result = result.replacingOccurrences(
+            of: "\\s+(tỉnh|tinh|thành phố|thanh pho|province|city)$",
+            with: "",
+            options: [.regularExpression, .caseInsensitive]
+        )
 
         return result.isEmpty ? nil : result
     }
@@ -373,24 +395,10 @@ final class NetworkContextService: NSObject, ObservableObject {
 
     private static func bestLocationName(for location: CLLocation, applePlace: String, locale: Locale) async -> String {
         do {
-            let osmPlace = try await reverseGeocodeWithOSM(location, locale: locale)
-            if hasStreetLevelAddress(osmPlace) || !hasStreetLevelAddress(applePlace) {
-                return osmPlace
-            }
+            return try await reverseGeocodeWithOSM(location, locale: locale)
         } catch {
+            return applePlace
         }
-
-        return applePlace
-    }
-
-    private static func hasStreetLevelAddress(_ displayName: String) -> Bool {
-        let parts = displayName
-            .split(separator: ",")
-            .map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
-            .filter { !$0.isEmpty }
-
-        guard parts.count >= 3, let first = parts.first else { return false }
-        return !isAdministrativePlaceName(first)
     }
 
     private static func reverseGeocodeWithOSM(_ location: CLLocation, locale: Locale) async throws -> String {
@@ -412,7 +420,7 @@ final class NetworkContextService: NSObject, ObservableObject {
 
         guard let url = components.url else { throw URLError(.badURL) }
         var request = URLRequest(url: url)
-        request.setValue("NetFlow/4.1 iOS weather-location", forHTTPHeaderField: "User-Agent")
+        request.setValue("NetFlow/4.1.8 iOS weather-location", forHTTPHeaderField: "User-Agent")
 
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse,
@@ -423,38 +431,14 @@ final class NetworkContextService: NSObject, ObservableObject {
         let decoded = try JSONDecoder().decode(OSMReverseGeocodeResponse.self, from: data)
         guard let address = decoded.address else { throw URLError(.cannotParseResponse) }
 
-        let streetBase = [
-            address.road,
-            address.pedestrian,
-            address.footway,
-            address.path,
-            address.residential,
-            address.amenity,
-            address.tourism
-        ]
-            .compactMap(normalizedStreetCandidate)
-            .first { !$0.isEmpty && !isAdministrativePlaceName($0) }
-
-        let street: String?
-        if let streetBase,
-           let houseNumber = cleanedLocationPart(address.house_number),
-           !streetBase.hasPrefix(houseNumber) {
-            street = "\(houseNumber) \(streetBase)"
-        } else {
-            street = streetBase
-        }
-
-        let province = normalizedProvince(address.state)
+        let province = normalizedProvince(address.state ?? address.province ?? address.region ?? address.city)
         let communeCandidates: [String?] = [
             address.suburb,
             address.quarter,
-            address.neighbourhood,
-            address.hamlet,
-            address.city_district,
             address.village,
             address.town,
             address.municipality,
-            address.county,
+            address.hamlet,
             address.city
         ]
         let commune = normalizedCommune(
@@ -467,10 +451,10 @@ final class NetworkContextService: NSObject, ObservableObject {
             } ?? nil
         )
 
-        let parts = [street, commune, province].compactMap { $0 }.filter { !$0.isEmpty }
-        var uniqueParts: [String] = []
-        for part in parts where !uniqueParts.contains(where: { placeKey($0) == placeKey(part) }) {
-            uniqueParts.append(part)
+        let parts = [commune, province].compactMap { $0 }.filter { !$0.isEmpty }
+        let uniqueParts = parts.reduce(into: [String]()) { result, part in
+            guard !result.contains(where: { placeKey($0) == placeKey(part) }) else { return }
+            result.append(part)
         }
 
         guard !uniqueParts.isEmpty else { throw URLError(.cannotParseResponse) }
@@ -526,7 +510,7 @@ final class NetworkContextService: NSObject, ObservableObject {
             throw URLError(.cannotParseResponse)
         }
 
-        return (CLLocation(latitude: latitude, longitude: longitude), "Gần đúng theo mạng")
+        return (CLLocation(latitude: latitude, longitude: longitude), "Approximate network location")
     }
 
     private static func decodeIPAPILocation(_ data: Data) throws -> (CLLocation, String) {
@@ -543,7 +527,7 @@ final class NetworkContextService: NSObject, ObservableObject {
             throw URLError(.cannotParseResponse)
         }
 
-        return (CLLocation(latitude: latitude, longitude: longitude), "Gần đúng theo mạng")
+        return (CLLocation(latitude: latitude, longitude: longitude), "Approximate network location")
     }
 
     private static func decodeIPInfoLocation(_ data: Data) throws -> (CLLocation, String) {
@@ -560,7 +544,7 @@ final class NetworkContextService: NSObject, ObservableObject {
 
         let coordinates = loc.split(separator: ",").compactMap { Double($0) }
         guard coordinates.count == 2 else { throw URLError(.cannotParseResponse) }
-        return (CLLocation(latitude: coordinates[0], longitude: coordinates[1]), "Gần đúng theo mạng")
+        return (CLLocation(latitude: coordinates[0], longitude: coordinates[1]), "Approximate network location")
     }
 
     private static func decodeGeolocationDBLocation(_ data: Data) throws -> (CLLocation, String) {
@@ -577,7 +561,7 @@ final class NetworkContextService: NSObject, ObservableObject {
             throw URLError(.cannotParseResponse)
         }
 
-        return (CLLocation(latitude: latitude, longitude: longitude), "Gần đúng theo mạng")
+        return (CLLocation(latitude: latitude, longitude: longitude), "Approximate network location")
     }
 
     private static func decodeIPSBLocation(_ data: Data) throws -> (CLLocation, String) {
@@ -594,7 +578,7 @@ final class NetworkContextService: NSObject, ObservableObject {
             throw URLError(.cannotParseResponse)
         }
 
-        return (CLLocation(latitude: latitude, longitude: longitude), "Gần đúng theo mạng")
+        return (CLLocation(latitude: latitude, longitude: longitude), "Approximate network location")
     }
 
     private static func cleanedLocationPart(_ rawValue: String?) -> String? {
@@ -616,39 +600,17 @@ final class NetworkContextService: NSObject, ObservableObject {
         return ["vn", "vnm", "viet nam", "vietnam"].contains(normalized)
     }
 
-    private static func normalizedStreetCandidate(_ rawValue: String?) -> String? {
-        guard var value = rawValue?.trimmingCharacters(in: .whitespacesAndNewlines),
-              !value.isEmpty else { return nil }
-
-        value = value.replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
-        value = value.replacingOccurrences(
-            of: ",\\s*(Việt Nam|Vietnam)$",
-            with: "",
-            options: [.regularExpression, .caseInsensitive]
-        )
-
-        return value.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-
-    private static func isAdministrativePlaceName(_ value: String) -> Bool {
-        let lower = value
-            .folding(options: [.diacriticInsensitive, .caseInsensitive], locale: Locale(identifier: "vi_VN"))
-            .lowercased()
-
-        let administrativePrefixes = [
-            "xa ", "x.", "xa.", "p.", "p ", "phuong ", "phuong.",
-            "thi tran ", "tinh ", "thanh pho ", "tp. "
-        ]
-
-        return administrativePrefixes.contains { lower.hasPrefix($0) }
-    }
-
     private static func placeKey(_ value: String) -> String {
         value
             .folding(options: [.diacriticInsensitive, .caseInsensitive], locale: Locale(identifier: "vi_VN"))
             .lowercased()
             .replacingOccurrences(
-                of: "^(x\\.|xa\\.?|p\\.|phuong\\.?|thi tran|tinh|thanh pho|tp\\.)\\s*",
+                of: "^(x\\.|xa\\.?|xã|p\\.|phuong\\.?|phường|thị trấn|thi tran|quận|q\\.|quan|huyện|h\\.|huyen|thị xã|tx\\.|thi xa|district|county|ward|commune|town|tỉnh|tinh|t\\.|thành phố|thanh pho|tp\\.?|province|city)\\s*",
+                with: "",
+                options: .regularExpression
+            )
+            .replacingOccurrences(
+                of: "\\s+(province|city|tinh|thanh pho)$",
                 with: "",
                 options: .regularExpression
             )
@@ -657,30 +619,7 @@ final class NetworkContextService: NSObject, ObservableObject {
     }
 
     private static func normalizedCommune(_ rawValue: String?) -> String? {
-        guard var value = rawValue?.trimmingCharacters(in: .whitespacesAndNewlines),
-              !value.isEmpty else {
-            return nil
-        }
-
-        let prefixes = [
-            "^x\\.?\\s*", "^xa\\.?\\s*", "^xã\\s+",
-            "^p\\.?\\s*", "^phuong\\.?\\s*", "^phường\\s+",
-            "^thị trấn\\s+", "^thi tran\\s+", "^ward\\s+"
-        ]
-
-        for prefix in prefixes where value.range(
-            of: prefix,
-            options: [.regularExpression, .caseInsensitive]
-        ) != nil {
-            value = value.replacingOccurrences(
-                of: prefix,
-                with: "",
-                options: [.regularExpression, .caseInsensitive]
-            )
-            break
-        }
-
-        return value.trimmingCharacters(in: .whitespacesAndNewlines)
+        cleanedVietnameseAdministrativeName(rawValue)
     }
 
     private static func normalizedProvince(_ rawValue: String?) -> String? {
@@ -690,8 +629,18 @@ final class NetworkContextService: NSObject, ObservableObject {
         }
 
         value = value.replacingOccurrences(of: "^Tỉnh\\s+", with: "", options: [.regularExpression, .caseInsensitive])
+        value = value.replacingOccurrences(of: "^Tinh\\s+", with: "", options: [.regularExpression, .caseInsensitive])
+        value = value.replacingOccurrences(of: "^T\\.\\s*", with: "", options: [.regularExpression, .caseInsensitive])
         value = value.replacingOccurrences(of: "^Thành phố\\s+", with: "", options: [.regularExpression, .caseInsensitive])
+        value = value.replacingOccurrences(of: "^Thanh pho\\s+", with: "", options: [.regularExpression, .caseInsensitive])
         value = value.replacingOccurrences(of: "^TP\\.?\\s*", with: "", options: [.regularExpression, .caseInsensitive])
+        value = value.replacingOccurrences(of: "^Province\\s+", with: "", options: [.regularExpression, .caseInsensitive])
+        value = value.replacingOccurrences(of: "^City of\\s+", with: "", options: [.regularExpression, .caseInsensitive])
+        value = value.replacingOccurrences(
+            of: "\\s+(Tỉnh|Tinh|Thành phố|Thanh pho|City|Province)$",
+            with: "",
+            options: [.regularExpression, .caseInsensitive]
+        )
 
         let normalizedLower = value
             .folding(options: [.diacriticInsensitive, .caseInsensitive], locale: Locale(identifier: "vi_VN"))
@@ -907,7 +856,15 @@ extension NetworkContextService: CLLocationManagerDelegate {
         _ manager: CLLocationManager,
         didUpdateLocations locations: [CLLocation]
     ) {
-        guard let location = locations.last else { return }
+        let location = locations
+            .filter { $0.horizontalAccuracy >= 0 }
+            .min {
+                if $0.horizontalAccuracy == $1.horizontalAccuracy {
+                    return $0.timestamp > $1.timestamp
+                }
+                return $0.horizontalAccuracy < $1.horizontalAccuracy
+            } ?? locations.last
+        guard let location else { return }
         Task { @MainActor [weak self] in
             guard let self else { return }
             self.currentLocation = location
@@ -973,25 +930,16 @@ private struct WeatherResponse: Decodable {
 
 private struct OSMReverseGeocodeResponse: Decodable {
     struct Address: Decodable {
-        let house_number: String?
-        let road: String?
-        let pedestrian: String?
-        let footway: String?
-        let path: String?
-        let residential: String?
-        let amenity: String?
-        let tourism: String?
         let hamlet: String?
-        let neighbourhood: String?
         let quarter: String?
         let suburb: String?
-        let city_district: String?
         let village: String?
         let town: String?
         let city: String?
         let municipality: String?
-        let county: String?
         let state: String?
+        let province: String?
+        let region: String?
     }
 
     let address: Address?

@@ -47,6 +47,6 @@ struct HistoryView: View {
             .padding(AppChrome.pagePadding)
         }
         .netFlowPageBackground()
-        .navigationTitle("history")
+        .navigationTitle(Text(verbatim: AppLocalization.string("history", locale: appLocale)))
     }
 }

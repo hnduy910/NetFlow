@@ -21,9 +21,10 @@ struct UsageAlertEvent: Codable, Identifiable, Hashable {
 }
 
 struct DataPlan: Codable, Hashable {
-    static let defaultName = "Gói dữ liệu"
+    static let defaultName = "Data Plan"
+    private static let legacyDefaultName = "Gói dữ liệu"
 
-    var name = "Gói dữ liệu"
+    var name = DataPlan.defaultName
     var cycleType: PlanCycleType = .monthly
     var capacityBytes: UInt64 = 30 * 1_000_000_000
     var capacityDisplayUnitRaw: String? = "GB"
@@ -48,7 +49,7 @@ struct DataPlan: Codable, Hashable {
     var effectiveCapacityBytes: UInt64 { isUnlimited ? UInt64.max : capacityBytes + carriedBytes }
 
     func displayName(locale: Locale) -> String {
-        name == Self.defaultName
+        (name == Self.defaultName || name == Self.legacyDefaultName)
             ? AppLocalization.string("default_plan_name", locale: locale)
             : name
     }

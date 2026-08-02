@@ -1,4 +1,4 @@
-NetFlow Universal v3.2 Build Ready
+NetFlow Universal v4.1.8 Build 24 Ready
 
 Required:
 1. Xcode 15 or newer.
@@ -57,3 +57,9 @@ NETFLOW 4.1 CHANGES
 - Added last-updated time and unified refresh action on Overview.
 
 V4.1: compact Day/Month/Year cycle picker; Last Updated moved to overview top.
+
+V4.1.8 Build 24:
+- English localization audit completed, including Settings and language labels.
+- About now displays marketing version, build number and build date on one line.
+- Navigation titles now follow the selected app language.
+- Location output is limited to commune/ward and province/city without street details or administrative prefixes.

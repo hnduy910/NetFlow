@@ -126,6 +126,7 @@
 "rain_probability" = "Tỷ lệ mưa";
 "about" = "Giới thiệu";
 "version" = "Phiên bản";
+"build" = "Bản build";
 "build_date" = "Ngày giờ build";
 "author" = "Tác giả";
 "unknown" = "Không rõ";

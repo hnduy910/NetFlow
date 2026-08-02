@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SystemCapabilitiesView: View {
     @EnvironmentObject private var store: AppStore
+    private var appLocale: Locale { store.settings.appLanguage.locale }
 
     var body: some View {
         ScrollView {
@@ -61,7 +62,7 @@ struct SystemCapabilitiesView: View {
             .padding(AppChrome.pagePadding)
         }
         .netFlowPageBackground()
-        .navigationTitle("system_information")
+        .navigationTitle(Text(verbatim: AppLocalization.string("system_information", locale: appLocale)))
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {

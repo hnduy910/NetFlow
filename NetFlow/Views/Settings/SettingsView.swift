@@ -4,6 +4,7 @@ struct SettingsView: View {
     @EnvironmentObject var store: AppStore
     @State private var exportURL: URL?
     @State private var showShare = false
+    private var appLocale: Locale { store.settings.appLanguage.locale }
 
     var body: some View {
         ScrollView {
@@ -48,7 +49,7 @@ struct SettingsView: View {
             .padding(AppChrome.pagePadding)
         }
         .netFlowPageBackground()
-        .navigationTitle("settings")
+        .navigationTitle(Text(verbatim: AppLocalization.string("settings", locale: appLocale)))
         .onChange(of: store.settings) { _ in store.save() }
         .onChange(of: store.settings.appLanguage) { _ in
             Task { await store.refreshContext() }
@@ -70,16 +71,27 @@ struct SettingsView: View {
     }
 
     private var appVersionText: String {
+        let locale = appLocale
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
         let displayVersion = version?.isEmpty == false
             ? version!
-            : AppLocalization.string("unknown", locale: store.settings.appLanguage.locale)
-        guard let buildDate = Bundle.main.object(forInfoDictionaryKey: "NetFlowBuildDate") as? String,
-              !buildDate.isEmpty else {
+            : AppLocalization.string("unknown", locale: locale)
+
+        var details: [String] = []
+        if let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String,
+           !build.isEmpty {
+            details.append("\(AppLocalization.string("build", locale: locale)) \(build)")
+        }
+        if let buildDate = Bundle.main.object(forInfoDictionaryKey: "NetFlowBuildDate") as? String,
+           !buildDate.isEmpty {
+            details.append(buildDate)
+        }
+
+        guard !details.isEmpty else {
             return displayVersion
         }
 
-        return "\(displayVersion) (\(buildDate))"
+        return "\(displayVersion) (\(details.joined(separator: ", ")))"
     }
 
     private func exportPDF(months: Int) {

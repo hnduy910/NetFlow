@@ -20,6 +20,7 @@ struct DataPlanView: View {
     @State private var capacityValue = 30.0
     @State private var capacityUnit: CapacityDisplayUnit = .gb
     @FocusState private var capacityFieldFocused: Bool
+    private var appLocale: Locale { store.settings.appLanguage.locale }
 
     private let selectableCycles: [PlanCycleType] = [.daily, .monthly, .yearly, .custom, .unlimited]
 
@@ -54,20 +55,20 @@ struct DataPlanView: View {
 
                         if store.plan.cycleType == .monthly {
                             Stepper(value: $store.plan.monthlyResetDay, in: 1...28) {
-                                Text("\(AppLocalization.string("reset_day", locale: store.settings.appLanguage.locale)) \(store.plan.monthlyResetDay)")
+                                Text("\(AppLocalization.string("reset_day", locale: appLocale)) \(store.plan.monthlyResetDay)")
                             }
                         }
                         if store.plan.cycleType == .yearly {
                             Stepper(value: $store.plan.yearlyResetMonth, in: 1...12) {
-                                Text("\(AppLocalization.string("reset_month", locale: store.settings.appLanguage.locale)) \(store.plan.yearlyResetMonth)")
+                                Text("\(AppLocalization.string("reset_month", locale: appLocale)) \(store.plan.yearlyResetMonth)")
                             }
                             Stepper(value: $store.plan.yearlyResetDay, in: 1...28) {
-                                Text("\(AppLocalization.string("reset_day", locale: store.settings.appLanguage.locale)) \(store.plan.yearlyResetDay)")
+                                Text("\(AppLocalization.string("reset_day", locale: appLocale)) \(store.plan.yearlyResetDay)")
                             }
                         }
                         if store.plan.cycleType == .custom {
                             Stepper(value: $store.plan.customDays, in: 1...365) {
-                                Text("\(AppLocalization.string("custom_days", locale: store.settings.appLanguage.locale)) \(store.plan.customDays)")
+                                Text("\(AppLocalization.string("custom_days", locale: appLocale)) \(store.plan.customDays)")
                             }
                         }
                     }
@@ -97,7 +98,7 @@ struct DataPlanView: View {
             .padding(AppChrome.pagePadding)
         }
         .netFlowPageBackground()
-        .navigationTitle("data_plan")
+        .navigationTitle(Text(verbatim: AppLocalization.string("data_plan", locale: appLocale)))
         .scrollDismissesKeyboard(.interactively)
         .contentShape(Rectangle())
         .onTapGesture { capacityFieldFocused = false }
