@@ -1,11 +1,19 @@
-# NetFlow
+# NetFlow Universal v4.1.9 (Build 25)
 
 > Monitor Wi‑Fi and Cellular data usage with a clean, native SwiftUI experience.
 
 NetFlow is an open-source iPhone and iPad app for understanding network usage, managing data plans, reviewing usage history, and exporting usage reports. It is designed around Apple's native UI patterns and keeps the experience simple, readable, and privacy-conscious.
 
-## Features
+## Release 4.1.9 (Build 25)
 
+- Fixed persistence decoding so a user-selected daily, monthly, yearly, or custom plan survives relaunch.
+- Added ISO-8601 date decoding with a legacy date-format fallback.
+- Completed the English localization audit, including Settings and language labels.
+- About now displays the marketing version, build number, and build date on one line.
+- Navigation titles follow the selected app language.
+- Location output is limited to commune/ward and province/city without street details or administrative prefixes.
+
+## Features
 - Wi‑Fi and Cellular usage summaries
 - Current connection status, local/public IP information, VPN status, and transfer speed
 - Daily, monthly, and yearly usage views
@@ -15,6 +23,11 @@ NetFlow is an open-source iPhone and iPad app for understanding network usage, m
 - English and Vietnamese language support
 - Light, dark, and system appearance options
 - Local data management with a clear-data action
+
+## Download
+
+- [IPA 4.1.9 (Build 25)](./NetFlow_Universal_v4_1_9_build25.ipa)
+- IPA is unsigned; use AltStore, SideStore, Sideloadly, or TrollStore to install it on a device.
 
 ## Screenshots
 

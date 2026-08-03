@@ -1,4 +1,4 @@
-NetFlow Universal v4.1.8 Build 24 Ready
+NetFlow Universal v4.1.9 Build 25 Ready
 
 Required:
 1. Xcode 15 or newer.
@@ -58,7 +58,9 @@ NETFLOW 4.1 CHANGES
 
 V4.1: compact Day/Month/Year cycle picker; Last Updated moved to overview top.
 
-V4.1.8 Build 24:
+V4.1.9 Build 25:
+- Fixed persistence decoding so a user-selected daily, monthly, yearly or custom plan survives relaunch.
+- Added ISO-8601 date decoding with a legacy date-format fallback.
 - English localization audit completed, including Settings and language labels.
 - About now displays marketing version, build number and build date on one line.
 - Navigation titles now follow the selected app language.

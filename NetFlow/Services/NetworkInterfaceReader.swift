@@ -420,7 +420,7 @@ final class NetworkContextService: NSObject, ObservableObject {
 
         guard let url = components.url else { throw URLError(.badURL) }
         var request = URLRequest(url: url)
-        request.setValue("NetFlow/4.1.8 iOS weather-location", forHTTPHeaderField: "User-Agent")
+        request.setValue("NetFlow/4.1.9 iOS weather-location", forHTTPHeaderField: "User-Agent")
 
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse,
