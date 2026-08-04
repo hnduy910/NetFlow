@@ -1,4 +1,4 @@
-NetFlow Universal v4.1.9 Build 25 Ready
+NetFlow Universal v4.1.10 Build 26 Ready
 
 Required:
 1. Xcode 15 or newer.
@@ -58,7 +58,10 @@ NETFLOW 4.1 CHANGES
 
 V4.1: compact Day/Month/Year cycle picker; Last Updated moved to overview top.
 
-V4.1.9 Build 25:
+V4.1.10 Build 26:
+- Plan counters normalize immediately at app launch when a daily, monthly, yearly or custom cycle has ended.
+- Samples crossing local midnight are split between the two dates so the new day does not inherit the previous day's traffic.
+- Previous-cycle records remain available in History but are excluded from the active plan counter.
 - Fixed persistence decoding so a user-selected daily, monthly, yearly or custom plan survives relaunch.
 - Added ISO-8601 date decoding with a legacy date-format fallback.
 - English localization audit completed, including Settings and language labels.

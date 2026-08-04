@@ -27,6 +27,9 @@ final class AppStore: ObservableObject {
         dailyRecords = loaded.records
         alerts = loaded.alerts
         networkContext.setLocale(settings.appLanguage.locale)
+        if normalizePlanCycle(now: Date()) {
+            save()
+        }
     }
 
     func start() async {
@@ -69,10 +72,11 @@ final class AppStore: ObservableObject {
     }
 
     func refresh() async {
+        let previousSnapshot = liveSnapshot
         let result = tracker.sample(previous: liveSnapshot)
         liveSnapshot = result.snapshot
         currentRate = result.rate
-        merge(delta: result.delta, sampledAt: result.snapshot.timestamp)
+        merge(delta: result.delta, from: previousSnapshot.timestamp, to: result.snapshot.timestamp)
         normalizePlanCycle(now: result.snapshot.timestamp)
         checkAlerts()
         save()
@@ -84,30 +88,76 @@ final class AppStore: ObservableObject {
         await capabilities.refresh(context: networkContext)
     }
 
-    func merge(delta: NetworkDelta, sampledAt: Date) {
+    func merge(delta: NetworkDelta, from start: Date, to end: Date) {
         guard delta.isValid, delta.totalBytes > 0 else { return }
+
+        guard start != .distantPast, end > start else {
+            merge(delta: delta, sampledAt: end, lastUpdated: end)
+            return
+        }
+
+        let calendar = Calendar.current
+        let totalDuration = end.timeIntervalSince(start)
+        var cursor = start
+        var remaining = delta
+
+        // Keep a sample that crosses midnight out of the new day's counter.
+        while cursor < end {
+            let dayStart = calendar.startOfDay(for: cursor)
+            let nextDay = calendar.date(byAdding: .day, value: 1, to: dayStart) ?? end
+            let segmentEnd = min(end, nextDay)
+            let isLastSegment = segmentEnd >= end
+            let segment: NetworkDelta
+
+            if isLastSegment {
+                segment = remaining
+            } else {
+                let fraction = min(max(segmentEnd.timeIntervalSince(cursor) / totalDuration, 0), 1)
+                segment = NetworkDelta(
+                    wifiReceived: portion(remaining.wifiReceived, fraction: fraction),
+                    wifiSent: portion(remaining.wifiSent, fraction: fraction),
+                    cellularReceived: portion(remaining.cellularReceived, fraction: fraction),
+                    cellularSent: portion(remaining.cellularSent, fraction: fraction),
+                    isValid: true
+                )
+                remaining = NetworkDelta(
+                    wifiReceived: remaining.wifiReceived - segment.wifiReceived,
+                    wifiSent: remaining.wifiSent - segment.wifiSent,
+                    cellularReceived: remaining.cellularReceived - segment.cellularReceived,
+                    cellularSent: remaining.cellularSent - segment.cellularSent,
+                    isValid: true
+                )
+            }
+
+            merge(delta: segment, sampledAt: cursor, lastUpdated: segmentEnd)
+            cursor = segmentEnd
+        }
+    }
+
+    private func merge(delta: NetworkDelta, sampledAt: Date, lastUpdated: Date) {
         let calendar = Calendar.current
         let day = calendar.startOfDay(for: sampledAt)
 
         if let index = dailyRecords.firstIndex(where: { calendar.isDate($0.date, inSameDayAs: day) }) {
             dailyRecords[index].add(delta)
-            dailyRecords[index].lastUpdated = sampledAt
+            dailyRecords[index].lastUpdated = max(dailyRecords[index].lastUpdated, lastUpdated)
         } else {
             dailyRecords.append(
                 DailyUsageRecord(
                     date: day,
                     delta: delta,
                     firstUpdated: sampledAt,
-                    lastUpdated: sampledAt
+                    lastUpdated: lastUpdated
                 )
             )
             dailyRecords.sort { $0.date > $1.date }
         }
     }
 
-    func normalizePlanCycle(now: Date) {
+    @discardableResult
+    func normalizePlanCycle(now: Date) -> Bool {
         let current = plan.cycleInterval(containing: now)
-        guard plan.activeCycleStart != current.start else { return }
+        guard plan.activeCycleStart != current.start else { return false }
 
         let previousCycleDate = current.start.addingTimeInterval(-1)
         let previousRemaining = plan.rolloverEnabled
@@ -119,6 +169,7 @@ final class AppStore: ObservableObject {
         plan.carriedBytes = previousRemaining
         plan.manualUsedBytes = 0
         plan.triggeredAlertIDs.removeAll()
+        return true
     }
 
     func planUsage(at date: Date = Date()) -> UInt64 {
@@ -172,6 +223,12 @@ final class AppStore: ObservableObject {
         plan.triggeredAlertIDs.removeAll()
         tracker.resetBaseline()
         save()
+    }
+
+    private func portion(_ value: UInt64, fraction: Double) -> UInt64 {
+        guard value > 0, fraction > 0 else { return 0 }
+        let scaled = (Double(value) * fraction).rounded()
+        return scaled >= Double(UInt64.max) ? value : UInt64(scaled)
     }
 }
 
