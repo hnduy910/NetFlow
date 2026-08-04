@@ -1,11 +1,15 @@
-# NetFlow Universal v4.1.10 (Build 26)
+# NetFlow Universal v4.1.11 (Build 27)
 
 > Monitor Wi‑Fi and Cellular data usage with a clean, native SwiftUI experience.
 
 NetFlow is an open-source iPhone and iPad app for understanding network usage, managing data plans, reviewing usage history, and exporting usage reports. It is designed around Apple's native UI patterns and keeps the experience simple, readable, and privacy-conscious.
 
-## Release 4.1.10 (Build 26)
+## Release 4.1.11 (Build 27)
 
+- Fixed app icon packaging with explicit iPhone and iPad icon declarations and the updated `hnd` mark.
+- Keeps the last resolved Wi-Fi/Cellular IPv4 visible while VPN is connected instead of flashing to an empty value.
+- Refreshes the underlying IPv4 only when the Wi-Fi or Cellular connection signature changes.
+- Keeps VPN public IP and country separate from the underlying Wi-Fi/Cellular IPv4.
 - Resets the selected plan counter immediately when its cycle has ended, including after reopening the app.
 - Keeps previous-cycle usage in History without including it in the current cycle counter.
 - Splits samples that cross midnight so the new day does not inherit the previous day's traffic.
@@ -29,7 +33,7 @@ NetFlow is an open-source iPhone and iPad app for understanding network usage, m
 
 ## Download
 
-- [IPA 4.1.10 (Build 26)](./NetFlow_Universal_v4_1_10_build26.ipa)
+- [IPA 4.1.11 (Build 27)](./NetFlow_Universal_v4_1_11_build27.ipa)
 - IPA is unsigned; use AltStore, SideStore, Sideloadly, or TrollStore to install it on a device.
 
 ## Screenshots

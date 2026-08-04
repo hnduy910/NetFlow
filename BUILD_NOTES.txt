@@ -1,4 +1,4 @@
-NetFlow Universal v4.1.10 Build 26 Ready
+NetFlow Universal v4.1.11 Build 27 Ready
 
 Required:
 1. Xcode 15 or newer.
@@ -20,7 +20,7 @@ Optional capability:
 No external dependency is required.
 
 APP ICON UPDATE (v3.2)
-- Integrated NetFlow / Ad879 icon into Assets.xcassets/AppIcon.appiconset.
+- Integrated NetFlow / hnd icon into Assets.xcassets/AppIcon.appiconset.
 - Source icon is a 1024x1024 opaque PNG with a white square background.
 - No pre-rounded corners or transparency; iOS applies the correct device mask automatically.
 - ASSETCATALOG_COMPILER_APPICON_NAME remains set to AppIcon for Debug and Release.
@@ -58,7 +58,11 @@ NETFLOW 4.1 CHANGES
 
 V4.1: compact Day/Month/Year cycle picker; Last Updated moved to overview top.
 
-V4.1.10 Build 26:
+V4.1.11 Build 27:
+- Added explicit iPhone/iPad icon declarations and updated the green icon mark to hnd.
+- Preserved the last non-VPN IPv4 while VPN is connected to avoid visible flicker.
+- Refreshes non-VPN IPv4 only when Wi-Fi or Cellular network identity changes.
+- Stores VPN public IP and country separately from the Wi-Fi/Cellular IPv4.
 - Plan counters normalize immediately at app launch when a daily, monthly, yearly or custom cycle has ended.
 - Samples crossing local midnight are split between the two dates so the new day does not inherit the previous day's traffic.
 - Previous-cycle records remain available in History but are excluded from the active plan counter.

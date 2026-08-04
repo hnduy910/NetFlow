@@ -38,6 +38,8 @@ struct ConnectionStatus: Hashable {
     var cellularLocalIPv4: String?
     var publicIPv4: String?
     var publicIPv6: String?
+    var vpnPublicIPv4: String?
+    var vpnPublicIPv6: String?
     var publicIPInterface: String?
     var carrierName: String?
     var isVPNActive = false
@@ -50,6 +52,7 @@ struct ConnectionStatus: Hashable {
 
     // Compatibility for older views/services.
     var publicIP: String? { publicIPv4 ?? publicIPv6 }
+    var vpnPublicIP: String? { vpnPublicIPv4 ?? vpnPublicIPv6 }
 }
 
 struct WeatherStatus: Hashable {

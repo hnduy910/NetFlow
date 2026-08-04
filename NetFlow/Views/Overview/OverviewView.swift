@@ -272,7 +272,7 @@ struct OverviewView: View {
                 : AppLocalization.string("not_active", locale: appLocale),
             rows: [
                 (AppLocalization.string("local_ip", locale: appLocale), context.connection.cellularLocalIPv4 ?? "—"),
-                ("IPv4", context.connection.publicIPInterface == "cellular" ? (context.connection.publicIPv4 ?? "—") : "—"),
+                ("IPv4", context.connection.isCellularActive ? (context.connection.publicIPv4 ?? "—") : "—"),
                 (AppLocalization.string("today", locale: appLocale), ByteFormat.string(today?.cellularTotalBytes ?? 0)),
                 (currentMonthTitle, ByteFormat.string(monthCellularBytes)),
                 (currentYearTitle, ByteFormat.string(yearCellularBytes))
@@ -289,7 +289,7 @@ struct OverviewView: View {
                 : AppLocalization.string("not_connected", locale: appLocale),
             rows: [
                 (AppLocalization.string("local_ip", locale: appLocale), context.connection.wifiLocalIPv4 ?? "—"),
-                ("IPv4", context.connection.publicIPInterface == "wifi" ? (context.connection.publicIPv4 ?? "—") : "—"),
+                ("IPv4", context.connection.isWiFiActive ? (context.connection.publicIPv4 ?? "—") : "—"),
                 (AppLocalization.string("today", locale: appLocale), ByteFormat.string(today?.wifiTotalBytes ?? 0)),
                 (currentMonthTitle, ByteFormat.string(monthWiFiBytes)),
                 (currentYearTitle, ByteFormat.string(yearWiFiBytes))
@@ -299,9 +299,7 @@ struct OverviewView: View {
 
     private var vpn: some View {
         let isVPNActive = context.connection.isVPNActive
-        let vpnIP = context.connection.publicIPInterface == "vpn"
-            ? (context.connection.publicIPv4 ?? context.connection.publicIPv6 ?? context.connection.vpnLocalIP)
-            : context.connection.vpnLocalIP
+        let vpnIP = context.connection.vpnPublicIP ?? context.connection.vpnLocalIP
         let vpnText: String? = {
             guard isVPNActive else { return nil }
             var parts: [String] = []

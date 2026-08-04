@@ -58,11 +58,26 @@ final class NetworkContextService: NSObject, ObservableObject {
     private var publicIPTask: Task<Void, Never>?
     private var cachedVPNCountryByIP: [String: String] = [:]
     private var activeNetworkSignature = ""
+    private var activeVPNSignature = ""
+    private var activeVPNTunnelSignature = ""
     private var activePublicIPInterface: String?
+    private var lastResolvedPublicNetworkSignature: String?
+    private var lastResolvedVPNSignature: String?
+    private var inFlightPublicIPRequestKey: String?
     private var appLocale = Locale.current
+
+    private enum CacheKey {
+        static let publicIPv4 = "NetFlow.cachedPublicIPv4"
+        static let publicIPv6 = "NetFlow.cachedPublicIPv6"
+        static let networkSignature = "NetFlow.cachedPublicNetworkSignature"
+    }
 
     override init() {
         super.init()
+
+        connection.publicIPv4 = UserDefaults.standard.string(forKey: CacheKey.publicIPv4)
+        connection.publicIPv6 = UserDefaults.standard.string(forKey: CacheKey.publicIPv6)
+        lastResolvedPublicNetworkSignature = UserDefaults.standard.string(forKey: CacheKey.networkSignature)
 
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -153,77 +168,124 @@ final class NetworkContextService: NSObject, ObservableObject {
 
         connection.wifiSSID = nil
         connection.carrierName = nil
-        activePublicIPInterface = currentPublicIPInterface()
-        connection.publicIPInterface = activePublicIPInterface
-        let signature = [
+        let networkSignature = [
             connection.isWiFiActive ? "wifi" : "",
             connection.isCellularActive ? "cellular" : "",
-            connection.isVPNActive ? "vpn" : "",
             connection.wifiLocalIPv4 ?? "",
-            connection.cellularLocalIPv4 ?? "",
+            connection.cellularLocalIPv4 ?? ""
+        ].joined(separator: "|")
+        let vpnTunnelSignature = [
+            connection.isVPNActive ? "vpn" : "",
             connection.vpnLocalIP ?? ""
         ].joined(separator: "|")
+        let vpnSignature = [networkSignature, vpnTunnelSignature].joined(separator: "|")
+        let vpnTunnelChanged = vpnTunnelSignature != activeVPNTunnelSignature
 
-        if signature != activeNetworkSignature {
-            activeNetworkSignature = signature
-            connection.publicIPv4 = nil
-            connection.publicIPv6 = nil
-            connection.publicIPInterface = activePublicIPInterface
+        activeNetworkSignature = networkSignature
+        activeVPNSignature = vpnSignature
+        activeVPNTunnelSignature = vpnTunnelSignature
+        activePublicIPInterface = currentPublicIPInterface()
+        connection.publicIPInterface = activePublicIPInterface
+
+        if vpnTunnelChanged {
+            connection.vpnPublicIPv4 = nil
+            connection.vpnPublicIPv6 = nil
             connection.vpnCountryName = nil
+            lastResolvedVPNSignature = nil
         }
         connection.lastUpdated = Date()
     }
 
     private func refreshPublicIPInBackground() {
+        let networkSignature = activeNetworkSignature
+        let vpnSignature = activeVPNSignature
+        let hasActiveNetwork = connection.isWiFiActive || connection.isCellularActive
+        let hasPublicIP = connection.publicIPv4 != nil || connection.publicIPv6 != nil
+        let hasVPNIP = connection.vpnPublicIPv4 != nil || connection.vpnPublicIPv6 != nil
+        let fetchUnderlyingIP = !connection.isVPNActive && hasActiveNetwork &&
+            (lastResolvedPublicNetworkSignature != networkSignature || !hasPublicIP)
+        let fetchVPNIP = connection.isVPNActive &&
+            (lastResolvedVPNSignature != vpnSignature || !hasVPNIP || connection.vpnCountryName == nil)
+
+        guard fetchUnderlyingIP || fetchVPNIP else { return }
+
+        let requestKey = [
+            networkSignature,
+            vpnSignature,
+            fetchUnderlyingIP ? "underlying" : "",
+            fetchVPNIP ? "vpn" : ""
+        ].joined(separator: "|")
+        if inFlightPublicIPRequestKey == requestKey { return }
         publicIPTask?.cancel()
-        let signature = activeNetworkSignature
-        let publicIPInterface = activePublicIPInterface
-        connection.publicIPv4 = nil
-        connection.publicIPv6 = nil
-        connection.publicIPInterface = publicIPInterface
-        if publicIPInterface != "vpn" {
-            connection.vpnCountryName = nil
-        }
-        connection.lastUpdated = Date()
+        inFlightPublicIPRequestKey = requestKey
+
         publicIPTask = Task { @MainActor [weak self] in
             guard let self else { return }
-            await self.refreshPublicIPDetails(
-                networkSignature: signature,
-                publicIPInterface: publicIPInterface
+            defer {
+                if self.inFlightPublicIPRequestKey == requestKey {
+                    self.inFlightPublicIPRequestKey = nil
+                    self.publicIPTask = nil
+                }
+            }
+
+            let nonce = String(Int(Date().timeIntervalSince1970 * 1000))
+            async let publicIPv4 = Self.fetchPublicIPAddress(
+                endpoint: "https://api4.ipify.org?format=json&netflow_ts=\(nonce)"
             )
+            async let publicIPv6 = Self.fetchPublicIPAddress(
+                endpoint: "https://api6.ipify.org?format=json&netflow_ts=\(nonce)"
+            )
+            let resolvedIPv4 = await publicIPv4
+            let resolvedIPv6 = await publicIPv6
+
+            guard networkSignature == self.activeNetworkSignature,
+                  vpnSignature == self.activeVPNSignature else { return }
+
+            if fetchUnderlyingIP {
+                if resolvedIPv4 != nil || resolvedIPv6 != nil {
+                    self.connection.publicIPv4 = resolvedIPv4
+                    self.connection.publicIPv6 = resolvedIPv6
+                    self.lastResolvedPublicNetworkSignature = networkSignature
+                    self.persistPublicIPCache(networkSignature: networkSignature)
+                }
+            }
+
+            if fetchVPNIP {
+                self.connection.vpnPublicIPv4 = resolvedIPv4
+                self.connection.vpnPublicIPv6 = resolvedIPv6
+                if let vpnPublicIP = self.connection.vpnPublicIP {
+                    if let cachedCountry = self.cachedVPNCountryByIP[vpnPublicIP] {
+                        self.connection.vpnCountryName = cachedCountry
+                    } else if let country = await Self.fetchIPCountryName(for: vpnPublicIP) {
+                        guard networkSignature == self.activeNetworkSignature,
+                              vpnSignature == self.activeVPNSignature else { return }
+                        self.cachedVPNCountryByIP[vpnPublicIP] = country
+                        self.connection.vpnCountryName = country
+                    } else {
+                        self.connection.vpnCountryName = nil
+                    }
+                    self.lastResolvedVPNSignature = vpnSignature
+                }
+            }
+
+            self.connection.publicIPInterface = self.activePublicIPInterface
+            self.connection.lastUpdated = Date()
         }
     }
 
-    private func refreshPublicIPDetails(networkSignature: String, publicIPInterface: String?) async {
-        let nonce = String(Int(Date().timeIntervalSince1970 * 1000))
-        async let publicIPv4 = Self.fetchPublicIPAddress(
-            endpoint: "https://api4.ipify.org?format=json&netflow_ts=\(nonce)"
-        )
-        async let publicIPv6 = Self.fetchPublicIPAddress(
-            endpoint: "https://api6.ipify.org?format=json&netflow_ts=\(nonce)"
-        )
-
-        let resolvedIPv4 = await publicIPv4
-        let resolvedIPv6 = await publicIPv6
-        guard networkSignature == activeNetworkSignature else { return }
-
-        connection.publicIPv4 = resolvedIPv4
-        connection.publicIPv6 = resolvedIPv6
-        connection.publicIPInterface = publicIPInterface
-        if publicIPInterface == "vpn", let vpnPublicIP = resolvedIPv4 ?? resolvedIPv6 {
-            if let cachedCountry = cachedVPNCountryByIP[vpnPublicIP] {
-                connection.vpnCountryName = cachedCountry
-            } else if let country = await Self.fetchIPCountryName(for: vpnPublicIP) {
-                guard networkSignature == activeNetworkSignature else { return }
-                cachedVPNCountryByIP[vpnPublicIP] = country
-                connection.vpnCountryName = country
-            } else {
-                connection.vpnCountryName = nil
-            }
+    private func persistPublicIPCache(networkSignature: String) {
+        let defaults = UserDefaults.standard
+        if let publicIPv4 = connection.publicIPv4 {
+            defaults.set(publicIPv4, forKey: CacheKey.publicIPv4)
         } else {
-            connection.vpnCountryName = nil
+            defaults.removeObject(forKey: CacheKey.publicIPv4)
         }
-        connection.lastUpdated = Date()
+        if let publicIPv6 = connection.publicIPv6 {
+            defaults.set(publicIPv6, forKey: CacheKey.publicIPv6)
+        } else {
+            defaults.removeObject(forKey: CacheKey.publicIPv6)
+        }
+        defaults.set(networkSignature, forKey: CacheKey.networkSignature)
     }
 
     private func currentPublicIPInterface() -> String? {
@@ -420,7 +482,7 @@ final class NetworkContextService: NSObject, ObservableObject {
 
         guard let url = components.url else { throw URLError(.badURL) }
         var request = URLRequest(url: url)
-        request.setValue("NetFlow/4.1.10 iOS weather-location", forHTTPHeaderField: "User-Agent")
+        request.setValue("NetFlow/4.1.11 iOS weather-location", forHTTPHeaderField: "User-Agent")
 
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse,
