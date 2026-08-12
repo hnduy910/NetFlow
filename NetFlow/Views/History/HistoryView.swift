@@ -36,8 +36,15 @@ struct HistoryView: View {
                 ForEach(store.dailyRecords.prefix(days)) { r in
                     VStack(alignment: .leading, spacing: 6) {
                         HStack { Text(r.date, style: .date).font(.headline); Spacer(); Text(ByteFormat.string(r.totalBytes)).bold() }
-                        Text("\(AppLocalization.string("cellular", locale: appLocale)) \(ByteFormat.string(r.cellularTotalBytes)) • \(AppLocalization.string("wifi", locale: appLocale)) \(ByteFormat.string(r.wifiTotalBytes))")
-                            .font(.caption).foregroundStyle(.secondary)
+                        (
+                            Text("\(AppLocalization.string("cellular", locale: appLocale)) ")
+                                .foregroundColor(.secondary)
+                            + Text(ByteFormat.string(r.cellularTotalBytes))
+                                .foregroundColor(store.isPlanExceeded(at: r.date) ? .red : .green)
+                            + Text(" • \(AppLocalization.string("wifi", locale: appLocale)) \(ByteFormat.string(r.wifiTotalBytes))")
+                                .foregroundColor(.secondary)
+                        )
+                        .font(.caption)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .netFlowCard(cornerRadius: 14)

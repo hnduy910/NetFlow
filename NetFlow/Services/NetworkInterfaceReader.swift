@@ -344,14 +344,12 @@ final class NetworkContextService: NSObject, ObservableObject {
     private func displayLocationName(from placemark: CLPlacemark) -> String {
         let commune = [
             placemark.subLocality,
-            placemark.locality,
-            placemark.subAdministrativeArea
+            placemark.locality
         ]
             .compactMap { Self.cleanedVietnameseAdministrativeName($0) }
             .first
         let province = [
             placemark.administrativeArea,
-            placemark.subAdministrativeArea,
             placemark.locality
         ]
             .compactMap { Self.cleanedVietnameseAdministrativeName($0) }
@@ -482,7 +480,7 @@ final class NetworkContextService: NSObject, ObservableObject {
 
         guard let url = components.url else { throw URLError(.badURL) }
         var request = URLRequest(url: url)
-        request.setValue("NetFlow/4.1.11 iOS weather-location", forHTTPHeaderField: "User-Agent")
+        request.setValue("NetFlow/4.1.12 iOS weather-location", forHTTPHeaderField: "User-Agent")
 
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse,
@@ -493,13 +491,13 @@ final class NetworkContextService: NSObject, ObservableObject {
         let decoded = try JSONDecoder().decode(OSMReverseGeocodeResponse.self, from: data)
         guard let address = decoded.address else { throw URLError(.cannotParseResponse) }
 
-        let province = normalizedProvince(address.state ?? address.province ?? address.region ?? address.city)
+        let province = normalizedProvince(address.province ?? address.state ?? address.region ?? address.city)
         let communeCandidates: [String?] = [
-            address.suburb,
-            address.quarter,
             address.village,
             address.town,
             address.municipality,
+            address.suburb,
+            address.quarter,
             address.hamlet,
             address.city
         ]
@@ -918,8 +916,12 @@ extension NetworkContextService: CLLocationManagerDelegate {
         _ manager: CLLocationManager,
         didUpdateLocations locations: [CLLocation]
     ) {
-        let location = locations
-            .filter { $0.horizontalAccuracy >= 0 }
+        let validLocations = locations.filter { $0.horizontalAccuracy >= 0 }
+        let recentLocations = validLocations.filter {
+            let age = Date().timeIntervalSince($0.timestamp)
+            return age >= 0 && age <= 120
+        }
+        let location = (recentLocations.isEmpty ? validLocations : recentLocations)
             .min {
                 if $0.horizontalAccuracy == $1.horizontalAccuracy {
                     return $0.timestamp > $1.timestamp

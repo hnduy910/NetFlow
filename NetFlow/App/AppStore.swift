@@ -180,6 +180,27 @@ final class AppStore: ObservableObject {
         return measured &+ plan.manualUsedBytes
     }
 
+    func isPlanExceeded(at date: Date = Date()) -> Bool {
+        guard !plan.isUnlimited else { return false }
+
+        let interval = plan.cycleInterval(containing: date)
+        let calendar = Calendar.current
+        let endOfDay = calendar.date(
+            byAdding: .day,
+            value: 1,
+            to: calendar.startOfDay(for: date)
+        ) ?? date
+        let measuredThroughDate = dailyRecords
+            .filter { interval.contains($0.date) && $0.date < endOfDay }
+            .reduce(UInt64(0)) { $0 &+ $1.cellularTotalBytes }
+        let manualUsage = interval.start == plan.activeCycleStart ? plan.manualUsedBytes : 0
+        let capacity = interval.start == plan.activeCycleStart
+            ? plan.effectiveCapacityBytes
+            : plan.capacityBytes
+
+        return measuredThroughDate &+ manualUsage > capacity
+    }
+
     func checkAlerts() {
         guard !plan.isUnlimited else { return }
         let used = planUsage()

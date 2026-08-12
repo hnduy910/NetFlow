@@ -1,4 +1,4 @@
-NetFlow Universal v4.1.11 Build 27 Ready
+NetFlow Universal v4.1.12 Build 28 Ready
 
 Required:
 1. Xcode 15 or newer.
@@ -58,7 +58,10 @@ NETFLOW 4.1 CHANGES
 
 V4.1: compact Day/Month/Year cycle picker; Last Updated moved to overview top.
 
-V4.1.11 Build 27:
+V4.1.12 Build 28:
+- Location prefers recent high-accuracy GPS fixes and detailed reverse geocoding.
+- Location display remains limited to commune/ward and province/city without street details or administrative prefixes.
+- Cellular usage values are green until the selected plan is exceeded, then only the numeric value turns red; labels and Remaining are unchanged.
 - Added explicit iPhone/iPad icon declarations and updated the green icon mark to hnd.
 - Preserved the last non-VPN IPv4 while VPN is connected to avoid visible flicker.
 - Refreshes non-VPN IPv4 only when Wi-Fi or Cellular network identity changes.

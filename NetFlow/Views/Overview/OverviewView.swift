@@ -271,11 +271,11 @@ struct OverviewView: View {
                 ? AppLocalization.string("connected", locale: appLocale)
                 : AppLocalization.string("not_active", locale: appLocale),
             rows: [
-                (AppLocalization.string("local_ip", locale: appLocale), context.connection.cellularLocalIPv4 ?? "—"),
-                ("IPv4", context.connection.isCellularActive ? (context.connection.publicIPv4 ?? "—") : "—"),
-                (AppLocalization.string("today", locale: appLocale), ByteFormat.string(today?.cellularTotalBytes ?? 0)),
-                (currentMonthTitle, ByteFormat.string(monthCellularBytes)),
-                (currentYearTitle, ByteFormat.string(yearCellularBytes))
+                (AppLocalization.string("local_ip", locale: appLocale), context.connection.cellularLocalIPv4 ?? "—", .primary),
+                ("IPv4", context.connection.isCellularActive ? (context.connection.publicIPv4 ?? "—") : "—", .primary),
+                (AppLocalization.string("today", locale: appLocale), ByteFormat.string(today?.cellularTotalBytes ?? 0), cellularUsageColor),
+                (currentMonthTitle, ByteFormat.string(monthCellularBytes), .primary),
+                (currentYearTitle, ByteFormat.string(yearCellularBytes), .primary)
             ]
         )
     }
@@ -288,11 +288,11 @@ struct OverviewView: View {
                 ? AppLocalization.string("connected", locale: appLocale)
                 : AppLocalization.string("not_connected", locale: appLocale),
             rows: [
-                (AppLocalization.string("local_ip", locale: appLocale), context.connection.wifiLocalIPv4 ?? "—"),
-                ("IPv4", context.connection.isWiFiActive ? (context.connection.publicIPv4 ?? "—") : "—"),
-                (AppLocalization.string("today", locale: appLocale), ByteFormat.string(today?.wifiTotalBytes ?? 0)),
-                (currentMonthTitle, ByteFormat.string(monthWiFiBytes)),
-                (currentYearTitle, ByteFormat.string(yearWiFiBytes))
+                (AppLocalization.string("local_ip", locale: appLocale), context.connection.wifiLocalIPv4 ?? "—", .primary),
+                ("IPv4", context.connection.isWiFiActive ? (context.connection.publicIPv4 ?? "—") : "—", .primary),
+                (AppLocalization.string("today", locale: appLocale), ByteFormat.string(today?.wifiTotalBytes ?? 0), .primary),
+                (currentMonthTitle, ByteFormat.string(monthWiFiBytes), .primary),
+                (currentYearTitle, ByteFormat.string(yearWiFiBytes), .primary)
             ]
         )
     }
@@ -331,6 +331,10 @@ struct OverviewView: View {
         .netFlowCard(cornerRadius: 18)
     }
 
+    private var cellularUsageColor: Color {
+        store.isPlanExceeded() ? .red : .green
+    }
+
     private var speed: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("current_speed").font(.headline)
@@ -361,7 +365,7 @@ private struct DetailCard: View {
     let title: String
     let icon: String
     let primary: String
-    let rows: [(String, String)]
+    let rows: [(String, String, Color)]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -373,6 +377,7 @@ private struct DetailCard: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(row.0).font(.caption2).foregroundStyle(.secondary)
                     Text(row.1)
+                        .foregroundStyle(row.2)
                         .font(.caption.weight(.medium))
                         .lineLimit(2)
                         .minimumScaleFactor(0.75)
