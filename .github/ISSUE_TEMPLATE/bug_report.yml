@@ -1,0 +1,41 @@
+name: Bug report
+description: Report a reproducible NetFlow problem
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for helping improve NetFlow. Please avoid including public IP addresses or other personal network details unless they are necessary to reproduce the issue.
+  - type: input
+    id: version
+    attributes:
+      label: NetFlow version
+      placeholder: "4.2.0 (Build 29)"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Device and iOS/iPadOS version
+      placeholder: "iPhone 16, iOS 18.x / Simulator"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the behavior and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: "1. Open …\n2. Tap …\n3. Observe …"
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Additional context
+      description: Screenshots or non-sensitive logs are welcome.
