@@ -1,47 +1,44 @@
-# NetFlow Universal v4.1.12 (Build 28)
+# NetFlow 4.2.0 (Build 29)
 
-> Monitor Wi‑Fi and Cellular data usage with a clean, native SwiftUI experience.
+[![iOS CI](https://github.com/hnduy910/NetFlow/actions/workflows/ci.yml/badge.svg)](https://github.com/hnduy910/NetFlow/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Swift](https://img.shields.io/badge/Swift-5-orange.svg)](https://www.swift.org/)
 
-NetFlow is an open-source iPhone and iPad app for understanding network usage, managing data plans, reviewing usage history, and exporting usage reports. It is designed around Apple's native UI patterns and keeps the experience simple, readable, and privacy-conscious.
+> A local-first SwiftUI app for understanding Wi-Fi and cellular data usage on iPhone and iPad.
 
-## Release 4.1.12 (Build 28)
+NetFlow is an open-source iOS/iPadOS app for monitoring network usage, managing data plans, reviewing history, exporting reports, and understanding whether current cellular usage is likely to exceed a plan. It uses native Apple frameworks, requires no account or backend, and keeps usage history on the device.
 
-- Improved location accuracy by preferring recent high-accuracy GPS fixes and using detailed reverse geocoding.
-- Location now shows only commune/ward and province/city names without street details or administrative prefixes.
-- Cellular usage numbers are green by default and turn red only after the selected plan is exceeded; labels and Remaining stay unchanged.
-- Fixed app icon packaging with explicit iPhone and iPad icon declarations and the updated `hnd` mark.
-- Keeps the last resolved Wi-Fi/Cellular IPv4 visible while VPN is connected instead of flashing to an empty value.
-- Refreshes the underlying IPv4 only when the Wi-Fi or Cellular connection signature changes.
-- Keeps VPN public IP and country separate from the underlying Wi-Fi/Cellular IPv4.
-- Resets the selected plan counter immediately when its cycle has ended, including after reopening the app.
-- Keeps previous-cycle usage in History without including it in the current cycle counter.
-- Splits samples that cross midnight so the new day does not inherit the previous day's traffic.
-- Fixed persistence decoding so a user-selected daily, monthly, yearly, or custom plan survives relaunch.
-- Added ISO-8601 date decoding with a legacy date-format fallback.
-- Completed the English localization audit, including Settings and language labels.
-- About now displays the marketing version, build number, and build date on one line.
-- Navigation titles follow the selected app language.
-- Location output is limited to commune/ward and province/city without street details or administrative prefixes.
+## What's new in 4.2.0
+
+- **Usage Forecast** — estimates average cellular usage per day and projected end-of-cycle usage.
+- **Plan Risk Indicator** — shows whether current usage is projected to exceed the configured data plan.
+- **CSV Export** — exports monthly or yearly usage with stable byte-level columns for analysis.
+- **Backup & Restore** — exports/imports settings, data-plan configuration, history, and alerts as JSON.
+- **Repository CI** — validates the project and builds against the iOS Simulator SDK on GitHub Actions.
+
+See [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ## Features
-- Wi‑Fi and Cellular usage summaries
+
+- Wi-Fi and cellular usage summaries
 - Current connection status, local/public IP information, VPN status, and transfer speed
-- Daily, monthly, and yearly usage views
-- Data-plan limits with reset-day and carry-over options
+- Daily, monthly, and yearly usage history
+- Data-plan limits with daily, monthly, yearly, custom, and unlimited cycles
+- Data-plan usage forecasting
 - Usage alerts for percentage and remaining-data thresholds
-- Monthly and yearly PDF report export
-- English and Vietnamese language support
+- Monthly and yearly PDF reports
+- Monthly and yearly CSV exports
+- Local JSON backup and restore
+- English and Vietnamese localization
 - Light, dark, and system appearance options
-- Local data management with a clear-data action
 
-## Download
+## Local-first privacy
 
-- [IPA 4.1.12 (Build 28)](./NetFlow_Universal_v4_1_12_build28.ipa)
-- IPA is unsigned; use AltStore, SideStore, Sideloadly, or TrollStore to install it on a device.
+NetFlow is designed so usage history and plan data stay on the device. No NetFlow account is required and the project has no third-party package dependency.
+
+Some optional dashboard information — such as public IP, weather, approximate location fallback, and reverse geocoding — uses network services documented in the source. NetFlow does not record browsing content.
 
 ## Screenshots
-
-The screenshots below are original PNG captures supplied for NetFlow. The four Simulator captures retain their original 1320 × 2868 resolution; the System Capabilities capture retains its original 1260 × 2736 resolution. All images are referenced using repository-relative paths so they render on GitHub.
 
 | Dashboard | History |
 | --- | --- |
@@ -55,68 +52,54 @@ The screenshots below are original PNG captures supplied for NetFlow. The four S
 | --- |
 | ![NetFlow System Capabilities](docs/images/capabilities.png) |
 
-### Screenshot coverage
-
-The current documentation package contains five screens:
-
-- Dashboard — `docs/images/dashboard.png`
-- History — `docs/images/history.png`
-- Data Plan — `docs/images/plan.png`
-- Settings — `docs/images/settings.png`
-- System Capabilities — `docs/images/capabilities.png`
-
-## Privacy
-
-NetFlow is intended to keep usage information on the device. The Settings screen states that the app does not record browsing content or send usage data to a server. No account is required to use the app.
-
-## Built with
-
-- Swift
-- SwiftUI
-- Charts
-- PDFKit
-- Network framework
-- UserNotifications
-- Apple's native iOS and iPadOS APIs
-
 ## Requirements
 
 - macOS with Xcode 15 or later
-- iOS 16 or later
-- A compatible iPhone, iPad, or Simulator
+- iOS/iPadOS 16 or later
+- iPhone, iPad, or Simulator
 
-The exact deployment target and signing requirements are defined by the Xcode project.
+A physical iPhone is recommended when validating cellular counters, VPN interfaces, and other device-specific networking behavior.
 
-## Getting started
+## Run locally
 
-1. Clone or download this repository.
-2. Open the Xcode project or workspace.
-3. Select an iPhone, iPad, or Simulator destination.
-4. Select a development team if signing is required.
-5. Build and run with **Product → Run** (`⌘R`).
+```bash
+git clone https://github.com/hnduy910/NetFlow.git
+cd NetFlow
+open NetFlow.xcodeproj
+```
 
-Network and cellular values can differ between Simulator and a physical device. Use a physical iPhone when validating device-only networking behavior.
+Then select an iPhone/iPad Simulator or a physical device and run with **Product → Run** (`⌘R`). A GitHub connection is not required for the app to run.
+
+For static validation:
+
+```bash
+bash Tools/check_project.sh
+```
+
+## Releases
+
+GitHub Releases provide source snapshots and an automatically built **unsigned IPA**. Unsigned IPAs require an appropriate sideloading/signing method before installation on a normal device.
 
 ## Repository layout
 
 ```text
-.
-├── README.md
-└── docs/
-    └── images/
-        ├── dashboard.png
-        ├── history.png
-        ├── plan.png
-        ├── capabilities.png
-        └── settings.png
+NetFlow/
+├── App/
+├── Models/
+├── Resources/
+├── Services/
+└── Views/
+Tools/
+.github/
+└── workflows/
 ```
 
 ## Contributing
 
-Bug reports, documentation improvements, and focused pull requests are welcome. Please describe the device/Simulator, OS version, Xcode version, and steps to reproduce when reporting an issue.
+Bug reports, documentation improvements, focused feature proposals, and pull requests are welcome. Good first contributions include localization improvements, accessibility fixes, test coverage, and small UI refinements.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow, [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for community expectations, and [SECURITY.md](SECURITY.md) for private vulnerability reporting.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), and [SECURITY.md](SECURITY.md) before contributing.
 
 ## License
 
-NetFlow is distributed under the license included in the repository. Keep the existing `LICENSE` file at the repository root when uploading this documentation package.
+NetFlow is available under the [MIT License](LICENSE).

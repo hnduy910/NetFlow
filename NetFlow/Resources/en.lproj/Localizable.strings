@@ -132,3 +132,15 @@
 "unknown" = "Unknown";
 "month" = "Month";
 "year" = "Year";
+"forecast" = "Usage Forecast";
+"average_per_day" = "Average per day";
+"projected_cycle_usage" = "Projected cycle usage";
+"forecast_over_limit" = "Projected to exceed this plan";
+"forecast_within_limit" = "Projected to stay within this plan";
+"export_month_csv" = "Export Monthly CSV";
+"export_year_csv" = "Export Yearly CSV";
+"export_backup" = "Export Backup";
+"import_backup" = "Restore Backup";
+"backup_restored" = "Backup restored successfully.";
+"backup_restore_failed" = "This backup could not be restored.";
+"export_failed" = "The file could not be exported.";

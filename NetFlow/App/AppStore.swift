@@ -235,6 +235,28 @@ final class AppStore: ObservableObject {
         persistence.save(settings: settings, plan: plan, records: dailyRecords, alerts: alerts)
     }
 
+    func makeBackup() throws -> URL {
+        try persistence.makeBackup(settings: settings, plan: plan, records: dailyRecords, alerts: alerts)
+    }
+
+    func makeCSV(interval: DateInterval) throws -> URL {
+        try persistence.makeCSV(records: dailyRecords, interval: interval)
+    }
+
+    func restoreBackup(from url: URL) throws {
+        let restored = try persistence.loadBackup(from: url)
+        settings = restored.settings
+        plan = restored.plan
+        dailyRecords = restored.records.sorted { $0.date > $1.date }
+        alerts = restored.alerts
+        liveSnapshot = .zero
+        currentRate = .zero
+        tracker.resetBaseline()
+        networkContext.setLocale(settings.appLanguage.locale)
+        _ = normalizePlanCycle(now: Date())
+        save()
+    }
+
     func resetAll() {
         dailyRecords = []
         alerts = []

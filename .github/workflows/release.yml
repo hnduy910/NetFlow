@@ -1,0 +1,45 @@
+name: Build unsigned release IPA
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  ipa:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Static project checks
+        run: bash Tools/check_project.sh
+      - name: Build unsigned device app
+        run: |
+          rm -rf build Payload
+          xcodebuild \
+            -project NetFlow.xcodeproj \
+            -target NetFlow \
+            -configuration Release \
+            -sdk iphoneos \
+            CONFIGURATION_BUILD_DIR="$PWD/build" \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+          test -d build/NetFlow.app
+      - name: Package unsigned IPA
+        run: |
+          mkdir -p Payload
+          cp -R build/NetFlow.app Payload/NetFlow.app
+          zip -qry "NetFlow_Universal_${GITHUB_REF_NAME}.ipa" Payload
+          shasum -a 256 "NetFlow_Universal_${GITHUB_REF_NAME}.ipa" > "NetFlow_Universal_${GITHUB_REF_NAME}.ipa.sha256"
+      - name: Upload assets to GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 || \
+            gh release create "$GITHUB_REF_NAME" --title "NetFlow ${GITHUB_REF_NAME#v}" --generate-notes
+          gh release upload "$GITHUB_REF_NAME" \
+            "NetFlow_Universal_${GITHUB_REF_NAME}.ipa" \
+            "NetFlow_Universal_${GITHUB_REF_NAME}.ipa.sha256" \
+            --clobber

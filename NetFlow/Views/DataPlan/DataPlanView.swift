@@ -74,6 +74,34 @@ struct DataPlanView: View {
                     }
                 }
 
+                if let forecast = store.plan.forecast(records: store.dailyRecords) {
+                    cardSection("forecast") {
+                        LabeledContent(
+                            AppLocalization.string("average_per_day", locale: appLocale),
+                            value: ByteFormat.string(forecast.averageDailyBytes)
+                        )
+                        LabeledContent(
+                            AppLocalization.string("projected_cycle_usage", locale: appLocale),
+                            value: ByteFormat.string(forecast.projectedBytes)
+                        )
+                        LabeledContent(
+                            AppLocalization.string("cycle_ends", locale: appLocale),
+                            value: forecast.cycleEnd.formatted(date: .abbreviated, time: .omitted)
+                        )
+
+                        Label(
+                            forecast.isProjectedToExceed
+                                ? AppLocalization.string("forecast_over_limit", locale: appLocale)
+                                : AppLocalization.string("forecast_within_limit", locale: appLocale),
+                            systemImage: forecast.isProjectedToExceed
+                                ? "exclamationmark.triangle.fill"
+                                : "checkmark.circle.fill"
+                        )
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(forecast.isProjectedToExceed ? Color.orange : Color.green)
+                    }
+                }
+
                 cardSection("alerts") {
                     ForEach($store.plan.alertThresholds) { $threshold in
                         Toggle(isOn: $threshold.enabled) {

@@ -1,4 +1,4 @@
-NetFlow Universal v4.1.12 Build 28 Ready
+NetFlow Universal v4.2.0 Build 29 Ready
 
 Required:
 1. Xcode 15 or newer.
@@ -75,3 +75,11 @@ V4.1.12 Build 28:
 - About now displays marketing version, build number and build date on one line.
 - Navigation titles now follow the selected app language.
 - Location output is limited to commune/ward and province/city without street details or administrative prefixes.
+
+V4.2.0 Build 29:
+- Added data-plan usage forecasting with average daily usage and projected end-of-cycle usage.
+- Added an over-limit projection indicator for finite data plans.
+- Added monthly/yearly CSV export with machine-readable byte columns.
+- Added local JSON backup and restore for settings, plan, history, and alerts.
+- Added GitHub Actions validation/build workflows and OSS issue templates.
+- No new entitlement or third-party runtime dependency is required.

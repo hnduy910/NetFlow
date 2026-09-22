@@ -20,6 +20,19 @@ struct UsageAlertEvent: Codable, Identifiable, Hashable {
     var remainingBytes: UInt64
 }
 
+struct UsageForecast: Hashable {
+    var usedBytes: UInt64
+    var averageDailyBytes: UInt64
+    var projectedBytes: UInt64
+    var capacityBytes: UInt64
+    var cycleEnd: Date
+
+    var isProjectedToExceed: Bool { projectedBytes > capacityBytes }
+    var projectedRemainingBytes: UInt64 {
+        capacityBytes > projectedBytes ? capacityBytes - projectedBytes : 0
+    }
+}
+
 struct DataPlan: Codable, Hashable {
     static let defaultName = "Data Plan"
     private static let legacyDefaultName = "Gói dữ liệu"
@@ -93,5 +106,39 @@ struct DataPlan: Codable, Hashable {
         let interval = cycleInterval(containing: date)
         let used = records.filter { interval.contains($0.date) }.reduce(0) { $0 + $1.cellularTotalBytes } + manualUsedBytes
         return effectiveCapacityBytes > used ? effectiveCapacityBytes - used : 0
+    }
+
+    func forecast(records: [DailyUsageRecord], at date: Date = Date()) -> UsageForecast? {
+        guard !isUnlimited else { return nil }
+
+        let interval = cycleInterval(containing: date)
+        let boundedNow = min(max(date, interval.start), interval.end)
+        let measured = records
+            .filter { interval.contains($0.date) && $0.date <= boundedNow }
+            .reduce(UInt64(0)) { $0 &+ $1.cellularTotalBytes }
+        let used = measured &+ manualUsedBytes
+
+        // Use at least one day as the observation window so a few minutes of
+        // early-cycle traffic do not produce an unrealistically large forecast.
+        let day: TimeInterval = 86_400
+        let elapsed = max(boundedNow.timeIntervalSince(interval.start), day)
+        let duration = max(interval.end.timeIntervalSince(interval.start), elapsed)
+        let projectedDouble = Double(used) * duration / elapsed
+        let averageDouble = Double(used) / max(elapsed / day, 1)
+
+        let projected = projectedDouble >= Double(UInt64.max)
+            ? UInt64.max
+            : UInt64(max(projectedDouble, 0).rounded())
+        let average = averageDouble >= Double(UInt64.max)
+            ? UInt64.max
+            : UInt64(max(averageDouble, 0).rounded())
+
+        return UsageForecast(
+            usedBytes: used,
+            averageDailyBytes: average,
+            projectedBytes: projected,
+            capacityBytes: effectiveCapacityBytes,
+            cycleEnd: interval.end
+        )
     }
 }
