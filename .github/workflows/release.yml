@@ -2,20 +2,41 @@ name: Build unsigned release IPA
 
 on:
   push:
-    tags:
-      - "v*"
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  ipa:
+  release:
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
+
+      - name: Resolve release version
+        id: meta
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" NetFlow/Info.plist)
+          BUILD=$(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" NetFlow/Info.plist)
+          TAG="v${VERSION}-build${BUILD}"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "build=${BUILD}" >> "$GITHUB_OUTPUT"
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          if gh release view "${TAG}" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Static project checks
+        if: steps.meta.outputs.exists != 'true'
         run: bash Tools/check_project.sh
+
       - name: Build unsigned device app
+        if: steps.meta.outputs.exists != 'true'
         run: |
           rm -rf build Payload
           xcodebuild \
@@ -27,19 +48,29 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             build
           test -d build/NetFlow.app
+
       - name: Package unsigned IPA
+        if: steps.meta.outputs.exists != 'true'
         run: |
+          TAG="${{ steps.meta.outputs.tag }}"
           mkdir -p Payload
           cp -R build/NetFlow.app Payload/NetFlow.app
-          zip -qry "NetFlow_Universal_${GITHUB_REF_NAME}.ipa" Payload
-          shasum -a 256 "NetFlow_Universal_${GITHUB_REF_NAME}.ipa" > "NetFlow_Universal_${GITHUB_REF_NAME}.ipa.sha256"
-      - name: Upload assets to GitHub Release
+          zip -qry "NetFlow_Universal_${TAG}.ipa" Payload
+          shasum -a 256 "NetFlow_Universal_${TAG}.ipa" > "NetFlow_Universal_${TAG}.ipa.sha256"
+
+      - name: Create tag and GitHub Release
+        if: steps.meta.outputs.exists != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 || \
-            gh release create "$GITHUB_REF_NAME" --title "NetFlow ${GITHUB_REF_NAME#v}" --generate-notes
-          gh release upload "$GITHUB_REF_NAME" \
-            "NetFlow_Universal_${GITHUB_REF_NAME}.ipa" \
-            "NetFlow_Universal_${GITHUB_REF_NAME}.ipa.sha256" \
-            --clobber
+          TAG="${{ steps.meta.outputs.tag }}"
+          VERSION="${{ steps.meta.outputs.version }}"
+          BUILD="${{ steps.meta.outputs.build }}"
+          git tag "${TAG}" "$GITHUB_SHA"
+          git push origin "${TAG}"
+          gh release create "${TAG}" \
+            --target "$GITHUB_SHA" \
+            --title "NetFlow ${VERSION} (Build ${BUILD})" \
+            --generate-notes \
+            "NetFlow_Universal_${TAG}.ipa" \
+            "NetFlow_Universal_${TAG}.ipa.sha256"
