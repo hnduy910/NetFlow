@@ -10,13 +10,20 @@ echo "[3/7] Localizations"
 plutil -lint NetFlow/Resources/en.lproj/Localizable.strings NetFlow/Resources/vi.lproj/Localizable.strings
 echo "[4/7] App icon"
 test -s NetFlow/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png
-python3 - <<'PY'
+if command -v sips >/dev/null 2>&1; then
+  ICON_INFO="$(sips -g pixelWidth -g pixelHeight NetFlow/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png)"
+  echo "$ICON_INFO" | grep -q "pixelWidth: 1024"
+  echo "$ICON_INFO" | grep -q "pixelHeight: 1024"
+  echo "App icon: 1024x1024"
+else
+  python3 - <<'PY'
 from PIL import Image
 im=Image.open('NetFlow/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png')
 assert im.size==(1024,1024), im.size
 assert im.mode in ('RGB','RGBA'), im.mode
 print('App icon:', im.size, im.mode)
 PY
+fi
 echo "[5/7] Source membership"
 python3 - <<'PY'
 from pathlib import Path
