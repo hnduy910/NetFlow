@@ -13,8 +13,6 @@ jobs:
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
-      - name: Install validation dependency
-        run: python3 -m pip install --user pillow
       - name: Static project checks
         run: bash Tools/check_project.sh
       - name: Build unsigned device app
