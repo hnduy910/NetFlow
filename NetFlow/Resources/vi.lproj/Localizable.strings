@@ -132,3 +132,15 @@
 "unknown" = "Không rõ";
 "month" = "Tháng";
 "year" = "Năm";
+"forecast" = "Dự báo sử dụng";
+"average_per_day" = "Trung bình mỗi ngày";
+"projected_cycle_usage" = "Dự kiến hết chu kỳ";
+"forecast_over_limit" = "Dự kiến vượt dung lượng gói";
+"forecast_within_limit" = "Dự kiến vẫn trong dung lượng gói";
+"export_month_csv" = "Xuất CSV tháng";
+"export_year_csv" = "Xuất CSV năm";
+"export_backup" = "Xuất bản sao lưu";
+"import_backup" = "Khôi phục bản sao lưu";
+"backup_restored" = "Đã khôi phục bản sao lưu thành công.";
+"backup_restore_failed" = "Không thể khôi phục bản sao lưu này.";
+"export_failed" = "Không thể xuất tệp.";
