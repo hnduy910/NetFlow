@@ -98,7 +98,7 @@ Tools/
 
 Bug reports, documentation improvements, focused feature proposals, and pull requests are welcome. Good first contributions include localization improvements, accessibility fixes, test coverage, and small UI refinements.
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), and [SECURITY.md](SECURITY.md) before contributing.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md), [ROADMAP.md](ROADMAP.md), [MAINTAINERS.md](MAINTAINERS.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), and [SECURITY.md](SECURITY.md) before contributing.
 
 ## License
 
