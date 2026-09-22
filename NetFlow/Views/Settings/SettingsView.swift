@@ -1,9 +1,12 @@
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct SettingsView: View {
     @EnvironmentObject var store: AppStore
     @State private var exportURL: URL?
     @State private var showShare = false
+    @State private var showBackupImporter = false
+    @State private var statusMessage: String?
     private var appLocale: Locale { store.settings.appLanguage.locale }
 
     var body: some View {
@@ -30,9 +33,13 @@ struct SettingsView: View {
                 cardSection("report") {
                     Button("export_month_pdf") { exportPDF(months: 1) }
                     Button("export_year_pdf") { exportPDF(months: 12) }
+                    Button("export_month_csv") { exportCSV(months: 1) }
+                    Button("export_year_csv") { exportCSV(months: 12) }
                 }
 
                 cardSection("data") {
+                    Button("export_backup") { exportBackup() }
+                    Button("import_backup") { showBackupImporter = true }
                     Button("reset_all", role: .destructive) { store.resetAll() }
                 }
 
@@ -55,6 +62,24 @@ struct SettingsView: View {
             Task { await store.refreshContext() }
         }
         .sheet(isPresented: $showShare) { if let exportURL { ShareSheet(items: [exportURL]) } }
+        .fileImporter(
+            isPresented: $showBackupImporter,
+            allowedContentTypes: [.json],
+            allowsMultipleSelection: false
+        ) { result in
+            importBackup(result)
+        }
+        .alert(
+            AppLocalization.string("data", locale: appLocale),
+            isPresented: Binding(
+                get: { statusMessage != nil },
+                set: { if !$0 { statusMessage = nil } }
+            )
+        ) {
+            Button("done", role: .cancel) { statusMessage = nil }
+        } message: {
+            Text(statusMessage ?? "")
+        }
     }
 
     private func cardSection<Content: View>(
@@ -105,6 +130,36 @@ struct SettingsView: View {
         )
         exportURL = try? PDFReportService().makePDF(options: options, plan: store.plan, records: store.dailyRecords)
         showShare = exportURL != nil
+    }
+
+    private func exportCSV(months: Int) {
+        let end = Date()
+        let start = Calendar.current.date(byAdding: .month, value: -months, to: end) ?? end
+        do {
+            exportURL = try store.makeCSV(interval: DateInterval(start: start, end: end))
+            showShare = true
+        } catch {
+            statusMessage = AppLocalization.string("export_failed", locale: appLocale)
+        }
+    }
+
+    private func exportBackup() {
+        do {
+            exportURL = try store.makeBackup()
+            showShare = true
+        } catch {
+            statusMessage = AppLocalization.string("export_failed", locale: appLocale)
+        }
+    }
+
+    private func importBackup(_ result: Result<[URL], Error>) {
+        do {
+            guard let url = try result.get().first else { return }
+            try store.restoreBackup(from: url)
+            statusMessage = AppLocalization.string("backup_restored", locale: appLocale)
+        } catch {
+            statusMessage = AppLocalization.string("backup_restore_failed", locale: appLocale)
+        }
     }
 }
 
