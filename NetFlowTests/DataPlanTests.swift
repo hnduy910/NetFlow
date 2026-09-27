@@ -41,7 +41,7 @@ final class DataPlanTests: XCTestCase {
         XCTAssertEqual(leapInterval.end, date(2025, 2, 28))
     }
 
-    func testForecastUsesCurrentCycleAndIncludesManualUsage() {
+    func testForecastUsesCurrentCycleAndIncludesManualUsage() throws {
         var plan = DataPlan()
         plan.cycleType = .daily
         plan.capacityBytes = 1_000
