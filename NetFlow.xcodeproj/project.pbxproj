@@ -1,153 +1,616 @@
 // !$*UTF8*$!
 {
 	archiveVersion = 1;
-	classes = {};
-	objectVersion = 56;
+	classes = {
+	};
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A20000000000000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000011 /* Assets.xcassets */; };
-		A10000000000000000000001 /* SystemCapabilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000011 /* SystemCapabilities.swift */; };
-		A10000000000000000000002 /* SystemCapabilitiesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000012 /* SystemCapabilitiesService.swift */; };
-		A10000000000000000000003 /* SystemCapabilitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000013 /* SystemCapabilitiesView.swift */; };
-		A10000000000000000000004 /* AppChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000014 /* AppChrome.swift */; };
-		40B986A4B04DA1316E6B0134 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110D6E0C411424287D6B4383 /* AppStore.swift */; };
-		521902CA3B6BBBBC62DB2FA7 /* NetFlowApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66562ACE246E64C5DC7BAB8 /* NetFlowApp.swift */; };
-		8A359A8D84E62D35FDB66F1B /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC9E8391260445C27D7B3B6 /* AppSettings.swift */; };
-		542DF0191ACA2810C131B99D /* DailyUsageRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441E52EC685FFBB032603AFE /* DailyUsageRecord.swift */; };
-		D2270CD05B2FC1D0A67EB411 /* DataPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93ABC57C6E92AEA46AC41EEA /* DataPlan.swift */; };
-		63D66C18AB73E0DFC9C660E4 /* NetworkModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9838A47C52DE0F97CABAA5A /* NetworkModels.swift */; };
-		BC9527A9ADE6C0FC9B6A5634 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0952488F06B9BB27E4C1805B /* Formatters.swift */; };
-		5FAC6EEEB74132BBCD72AAAB /* NetworkInterfaceReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBF058E2145E41C77EB776F /* NetworkInterfaceReader.swift */; };
-		837828955A4C7990199751CB /* PDFReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A871A031C18E978F340BCBB3 /* PDFReportService.swift */; };
-		A05DF6A196B78DA6CAAF43DD /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD0413EDA45418DC162C1CF /* PersistenceService.swift */; };
-		1CA042ED5DD90E6E6B21E4AE /* UsageTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28136BB7EE90119A071A64F /* UsageTracker.swift */; };
-		752CB43A93A37FC248AE24CE /* UsageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8CC3259B859AD4BAA7DCD8 /* UsageCard.swift */; };
-		40D1A72FF577054CC672548B /* DataPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A88F37D24373DB0F8240DD3 /* DataPlanView.swift */; };
-		A884142D17D4815F9779EDCC /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5659AAB40BAC31935CB6B45A /* HistoryView.swift */; };
-		7C633070DB01638B975AE4E9 /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7030CDE8DAA0697FD42DB49 /* OverviewView.swift */; };
-		ECA2504668DE0828127450F0 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2200878E94C30216487A4A30 /* RootTabView.swift */; };
-		4AB6E687D2B790F2BC3AD3A8 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD3576ED0D323BFF727B1AF /* SettingsView.swift */; };
-		BC489C0029FE233D12E3211D /* en.lproj/Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BDB39C484F75B9A3E177C1A9; };
-		17ACAC1695DCD4C77F44DD8E /* vi.lproj/Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0684AA56AE94CD2625756DAA; };
+		1689C539C8CBEF3728665E2F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B8BA599DA3470763B88F4A0 /* Assets.xcassets */; };
+		228EDE607E5DCD36B97B7E93 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECFE0245990F4E97984F02AF /* AppStore.swift */; };
+		26C29F1B8D824052CD733D2A /* SystemCapabilitiesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C252D38C0C921E6F8C602986 /* SystemCapabilitiesService.swift */; };
+		304FF9D84A862007C8B4BE8A /* NetFlowApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BC518B22CE0DFB5A43D67C /* NetFlowApp.swift */; };
+		35A16B36A8168AAD7A401C43 /* UsageTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF2D6A7CD44507FF7727F50 /* UsageTracker.swift */; };
+		51D6A1F5AFEEEADB713D3381 /* NetworkInterfaceReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837941D8E539720585C89897 /* NetworkInterfaceReader.swift */; };
+		5C933FA47C0C6F23592A5315 /* AppChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4994BA349BD59EA0D48A4A4B /* AppChrome.swift */; };
+		6315AA4CE266139EB971B651 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2562289781F7E1603D3C2AB0 /* HistoryView.swift */; };
+		69FB51483FDE63DD07E2F7E6 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EECC3D3B5E47AA809473B0 /* AppSettings.swift */; };
+		79451DBE4DC1BEFC54A6E2DB /* SystemCapabilitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8DB3C294577ABA708A3489 /* SystemCapabilitiesView.swift */; };
+		79A31E915726C531395B9598 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E6D85363507F81D69F4FC8 /* SettingsView.swift */; };
+		80FB2ED1EA3FC610E3905FC4 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70E3004C7773DF796570D04 /* PersistenceService.swift */; };
+		87E8332964C3C8A52BD69A32 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CDD6E81AB202F0850AED19C5 /* Localizable.strings */; };
+		88BF570D4A7666A3BCD2E88D /* PDFReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332342DBF29B01143994781F /* PDFReportService.swift */; };
+		924429FEE7F54C5BE8277EA3 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B0CBB8AD62A721DFC42A2B /* RootTabView.swift */; };
+		988D23A017B7832255EDE20D /* NetworkModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E95E0426B5F63995E512D2 /* NetworkModels.swift */; };
+		9BB3906062A78AC726C06815 /* SystemCapabilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D11CFEC71310FDFED75B7 /* SystemCapabilities.swift */; };
+		A10B883F3A19B91ACE2867B8 /* UsageTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAEAFF52E03014D19F00C4D /* UsageTrackerTests.swift */; };
+		A2B6DE404ACF641034CB653E /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B71AD36A303BCADBA89C3 /* Formatters.swift */; };
+		B537058BA665D9068531C9F9 /* AppStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF09890C3042EEB451347E6 /* AppStoreTests.swift */; };
+		B6451560C472B6D274249D24 /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC4E9DDBF5B6A4B13A7A773 /* OverviewView.swift */; };
+		B83C0AEBE464551AB8F6EB0C /* DataPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD889CE2D0915B333F9A14FC /* DataPlanView.swift */; };
+		CF81A868D086A2FC4D7E6438 /* DailyUsageRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A46B0F637F7F40B20C66453 /* DailyUsageRecord.swift */; };
+		D11BDB9CC517858763953BEE /* DataPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04396C12A917A84D9C1265CB /* DataPlanTests.swift */; };
+		D98774FAA9EDF290950EDB5B /* DataPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DB9D73B32BEE1C1ED7842C /* DataPlan.swift */; };
+		DB6DDE1D98A3C160AE48F694 /* PersistenceServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7864E5824362DDCBBC4C9DB6 /* PersistenceServiceTests.swift */; };
+		EAB7617EA73E7CFD22E533F3 /* UsageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261C5DA926135BB340054391 /* UsageCard.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		9CAC58420B3BCB933D1ABD3A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C52E1182A4D9012D6EB78D7E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 86D3F0629756097A5955B6A5;
+			remoteInfo = NetFlow;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		A20000000000000000000011 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "NetFlow/Resources/Assets.xcassets"; sourceTree = "<group>"; };
-		A10000000000000000000011 /* SystemCapabilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Models/SystemCapabilities.swift"; sourceTree = "<group>"; };
-		A10000000000000000000012 /* SystemCapabilitiesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Services/SystemCapabilitiesService.swift"; sourceTree = "<group>"; };
-		A10000000000000000000013 /* SystemCapabilitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Views/System/SystemCapabilitiesView.swift"; sourceTree = "<group>"; };
-		A10000000000000000000014 /* AppChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Views/Components/AppChrome.swift"; sourceTree = "<group>"; };
-		110D6E0C411424287D6B4383 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/App/AppStore.swift"; sourceTree = "<group>"; };
-		E66562ACE246E64C5DC7BAB8 /* NetFlowApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/App/NetFlowApp.swift"; sourceTree = "<group>"; };
-		2BC9E8391260445C27D7B3B6 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Models/AppSettings.swift"; sourceTree = "<group>"; };
-		441E52EC685FFBB032603AFE /* DailyUsageRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Models/DailyUsageRecord.swift"; sourceTree = "<group>"; };
-		93ABC57C6E92AEA46AC41EEA /* DataPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Models/DataPlan.swift"; sourceTree = "<group>"; };
-		B9838A47C52DE0F97CABAA5A /* NetworkModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Models/NetworkModels.swift"; sourceTree = "<group>"; };
-		0952488F06B9BB27E4C1805B /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Services/Formatters.swift"; sourceTree = "<group>"; };
-		1CBF058E2145E41C77EB776F /* NetworkInterfaceReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Services/NetworkInterfaceReader.swift"; sourceTree = "<group>"; };
-		A871A031C18E978F340BCBB3 /* PDFReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Services/PDFReportService.swift"; sourceTree = "<group>"; };
-		7CD0413EDA45418DC162C1CF /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Services/PersistenceService.swift"; sourceTree = "<group>"; };
-		F28136BB7EE90119A071A64F /* UsageTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Services/UsageTracker.swift"; sourceTree = "<group>"; };
-		1F8CC3259B859AD4BAA7DCD8 /* UsageCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Views/Components/UsageCard.swift"; sourceTree = "<group>"; };
-		9A88F37D24373DB0F8240DD3 /* DataPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Views/DataPlan/DataPlanView.swift"; sourceTree = "<group>"; };
-		5659AAB40BAC31935CB6B45A /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Views/History/HistoryView.swift"; sourceTree = "<group>"; };
-		E7030CDE8DAA0697FD42DB49 /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Views/Overview/OverviewView.swift"; sourceTree = "<group>"; };
-		2200878E94C30216487A4A30 /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Views/RootTabView.swift"; sourceTree = "<group>"; };
-		1FD3576ED0D323BFF727B1AF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetFlow/Views/Settings/SettingsView.swift"; sourceTree = "<group>"; };
-		BDB39C484F75B9A3E177C1A9 /* en.lproj/Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = "NetFlow/Resources/en.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		0684AA56AE94CD2625756DAA /* vi.lproj/Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = "NetFlow/Resources/vi.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		D00000000000000000000001 /* NetFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		04396C12A917A84D9C1265CB /* DataPlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPlanTests.swift; sourceTree = "<group>"; };
+		04BC518B22CE0DFB5A43D67C /* NetFlowApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetFlowApp.swift; sourceTree = "<group>"; };
+		0A14E0FC54CB91D7EFBE6288 /* NetFlow.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NetFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		119D11CFEC71310FDFED75B7 /* SystemCapabilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemCapabilities.swift; sourceTree = "<group>"; };
+		16EECC3D3B5E47AA809473B0 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		1FF09890C3042EEB451347E6 /* AppStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreTests.swift; sourceTree = "<group>"; };
+		2562289781F7E1603D3C2AB0 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		261C5DA926135BB340054391 /* UsageCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageCard.swift; sourceTree = "<group>"; };
+		2B8DB3C294577ABA708A3489 /* SystemCapabilitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemCapabilitiesView.swift; sourceTree = "<group>"; };
+		30AFA73F1D55916615E09DEE /* NetFlowTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = NetFlowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		332342DBF29B01143994781F /* PDFReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFReportService.swift; sourceTree = "<group>"; };
+		4994BA349BD59EA0D48A4A4B /* AppChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppChrome.swift; sourceTree = "<group>"; };
+		5B8BA599DA3470763B88F4A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		615B71AD36A303BCADBA89C3 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
+		6AF2D6A7CD44507FF7727F50 /* UsageTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageTracker.swift; sourceTree = "<group>"; };
+		6BAEAFF52E03014D19F00C4D /* UsageTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageTrackerTests.swift; sourceTree = "<group>"; };
+		6CBC315C8A1D15CCEBDF544B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6FC4E9DDBF5B6A4B13A7A773 /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewView.swift; sourceTree = "<group>"; };
+		7864E5824362DDCBBC4C9DB6 /* PersistenceServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceServiceTests.swift; sourceTree = "<group>"; };
+		7A46B0F637F7F40B20C66453 /* DailyUsageRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyUsageRecord.swift; sourceTree = "<group>"; };
+		837941D8E539720585C89897 /* NetworkInterfaceReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInterfaceReader.swift; sourceTree = "<group>"; };
+		84E95E0426B5F63995E512D2 /* NetworkModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModels.swift; sourceTree = "<group>"; };
+		B70E3004C7773DF796570D04 /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
+		C252D38C0C921E6F8C602986 /* SystemCapabilitiesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemCapabilitiesService.swift; sourceTree = "<group>"; };
+		D1F27CFF0A04A2D93DE154D1 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D7E6D85363507F81D69F4FC8 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		E3DB9D73B32BEE1C1ED7842C /* DataPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPlan.swift; sourceTree = "<group>"; };
+		E6DFB8D2155D261F709B0160 /* NetFlow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NetFlow.entitlements; sourceTree = "<group>"; };
+		E8B0CBB8AD62A721DFC42A2B /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
+		ECFE0245990F4E97984F02AF /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
+		F2E696249F02CA3009437B95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		FD889CE2D0915B333F9A14FC /* DataPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPlanView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFrameworksBuildPhase section */
-		D00000000000000000000007 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
-/* End PBXFrameworksBuildPhase section */
-
 /* Begin PBXGroup section */
-		D00000000000000000000003 = {isa = PBXGroup; children = (
-				A20000000000000000000011 /* Assets.xcassets */,
-				A10000000000000000000011 /* SystemCapabilities.swift */,
-				A10000000000000000000012 /* SystemCapabilitiesService.swift */,
-				A10000000000000000000013 /* SystemCapabilitiesView.swift */,
-				A10000000000000000000014 /* AppChrome.swift */,
-				110D6E0C411424287D6B4383 /* AppStore.swift */,
-				E66562ACE246E64C5DC7BAB8 /* NetFlowApp.swift */,
-				2BC9E8391260445C27D7B3B6 /* AppSettings.swift */,
-				441E52EC685FFBB032603AFE /* DailyUsageRecord.swift */,
-				93ABC57C6E92AEA46AC41EEA /* DataPlan.swift */,
-				B9838A47C52DE0F97CABAA5A /* NetworkModels.swift */,
-				0952488F06B9BB27E4C1805B /* Formatters.swift */,
-				1CBF058E2145E41C77EB776F /* NetworkInterfaceReader.swift */,
-				A871A031C18E978F340BCBB3 /* PDFReportService.swift */,
-				7CD0413EDA45418DC162C1CF /* PersistenceService.swift */,
-				F28136BB7EE90119A071A64F /* UsageTracker.swift */,
-				1F8CC3259B859AD4BAA7DCD8 /* UsageCard.swift */,
-				9A88F37D24373DB0F8240DD3 /* DataPlanView.swift */,
-				5659AAB40BAC31935CB6B45A /* HistoryView.swift */,
-				E7030CDE8DAA0697FD42DB49 /* OverviewView.swift */,
-				2200878E94C30216487A4A30 /* RootTabView.swift */,
-				1FD3576ED0D323BFF727B1AF /* SettingsView.swift */,
-				BDB39C484F75B9A3E177C1A9 /* Localizable.strings */,
-				0684AA56AE94CD2625756DAA /* Localizable.strings */,
-				D00000000000000000000004 /* Products */,
-			); sourceTree = "<group>"; };
-		D00000000000000000000004 /* Products */ = {isa = PBXGroup; children = (D00000000000000000000001 /* NetFlow.app */,); name = Products; sourceTree = "<group>"; };
+		0E71D3F17DB29EA91196B4E3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E8B0CBB8AD62A721DFC42A2B /* RootTabView.swift */,
+				3DEA718E1280CF816E699710 /* Components */,
+				FF2FA53670FA8EB232C72C9D /* DataPlan */,
+				E6ACB329F330E2A45E16A263 /* History */,
+				F3FED09A48EE49B8F4E67649 /* Overview */,
+				58D380A64399EA95771F8B6E /* Settings */,
+				58E001368DA8468864E47764 /* System */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		10ED10B1689C4E325818A770 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				615B71AD36A303BCADBA89C3 /* Formatters.swift */,
+				837941D8E539720585C89897 /* NetworkInterfaceReader.swift */,
+				332342DBF29B01143994781F /* PDFReportService.swift */,
+				B70E3004C7773DF796570D04 /* PersistenceService.swift */,
+				C252D38C0C921E6F8C602986 /* SystemCapabilitiesService.swift */,
+				6AF2D6A7CD44507FF7727F50 /* UsageTracker.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		1E8FC7483A8ED1A55E10E056 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				ECFE0245990F4E97984F02AF /* AppStore.swift */,
+				04BC518B22CE0DFB5A43D67C /* NetFlowApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		20D5665D58C872F92B29B6B5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				16EECC3D3B5E47AA809473B0 /* AppSettings.swift */,
+				7A46B0F637F7F40B20C66453 /* DailyUsageRecord.swift */,
+				E3DB9D73B32BEE1C1ED7842C /* DataPlan.swift */,
+				84E95E0426B5F63995E512D2 /* NetworkModels.swift */,
+				119D11CFEC71310FDFED75B7 /* SystemCapabilities.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		3DEA718E1280CF816E699710 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				4994BA349BD59EA0D48A4A4B /* AppChrome.swift */,
+				261C5DA926135BB340054391 /* UsageCard.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		58D380A64399EA95771F8B6E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				D7E6D85363507F81D69F4FC8 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		58E001368DA8468864E47764 /* System */ = {
+			isa = PBXGroup;
+			children = (
+				2B8DB3C294577ABA708A3489 /* SystemCapabilitiesView.swift */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		B446C7C65AA5A3DF013909CD = {
+			isa = PBXGroup;
+			children = (
+				B4D47077D765AD8252637B2A /* NetFlow */,
+				FB3DFDE2D49E863CEAAC7A01 /* NetFlowTests */,
+				DA5D5D3D8FFB40E8E5137428 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B4D47077D765AD8252637B2A /* NetFlow */ = {
+			isa = PBXGroup;
+			children = (
+				F2E696249F02CA3009437B95 /* Info.plist */,
+				E6DFB8D2155D261F709B0160 /* NetFlow.entitlements */,
+				1E8FC7483A8ED1A55E10E056 /* App */,
+				20D5665D58C872F92B29B6B5 /* Models */,
+				E970C288A7EE31C14C95FB3A /* Resources */,
+				10ED10B1689C4E325818A770 /* Services */,
+				0E71D3F17DB29EA91196B4E3 /* Views */,
+			);
+			path = NetFlow;
+			sourceTree = "<group>";
+		};
+		DA5D5D3D8FFB40E8E5137428 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0A14E0FC54CB91D7EFBE6288 /* NetFlow.app */,
+				30AFA73F1D55916615E09DEE /* NetFlowTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E6ACB329F330E2A45E16A263 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				2562289781F7E1603D3C2AB0 /* HistoryView.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		E970C288A7EE31C14C95FB3A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5B8BA599DA3470763B88F4A0 /* Assets.xcassets */,
+				CDD6E81AB202F0850AED19C5 /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		F3FED09A48EE49B8F4E67649 /* Overview */ = {
+			isa = PBXGroup;
+			children = (
+				6FC4E9DDBF5B6A4B13A7A773 /* OverviewView.swift */,
+			);
+			path = Overview;
+			sourceTree = "<group>";
+		};
+		FB3DFDE2D49E863CEAAC7A01 /* NetFlowTests */ = {
+			isa = PBXGroup;
+			children = (
+				1FF09890C3042EEB451347E6 /* AppStoreTests.swift */,
+				04396C12A917A84D9C1265CB /* DataPlanTests.swift */,
+				7864E5824362DDCBBC4C9DB6 /* PersistenceServiceTests.swift */,
+				6BAEAFF52E03014D19F00C4D /* UsageTrackerTests.swift */,
+			);
+			path = NetFlowTests;
+			sourceTree = "<group>";
+		};
+		FF2FA53670FA8EB232C72C9D /* DataPlan */ = {
+			isa = PBXGroup;
+			children = (
+				FD889CE2D0915B333F9A14FC /* DataPlanView.swift */,
+			);
+			path = DataPlan;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D00000000000000000000005 /* NetFlow */ = {isa = PBXNativeTarget; buildConfigurationList = D0000000000000000000000A; buildPhases = (D00000000000000000000006,D00000000000000000000007,D00000000000000000000008); buildRules = (); dependencies = (); name = NetFlow; productName = NetFlow; productReference = D00000000000000000000001; productType = "com.apple.product-type.application"; };
+		19EB3BDA957FAB4A1D180062 /* NetFlowTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 697664B9C5721573A0BEA1CA /* Build configuration list for PBXNativeTarget "NetFlowTests" */;
+			buildPhases = (
+				91507C4F635DC0682C55A788 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4EFF36361E95C6722EEA69FD /* PBXTargetDependency */,
+			);
+			name = NetFlowTests;
+			packageProductDependencies = (
+			);
+			productName = NetFlowTests;
+			productReference = 30AFA73F1D55916615E09DEE /* NetFlowTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		86D3F0629756097A5955B6A5 /* NetFlow */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 395C976E31A88340EF5335AD /* Build configuration list for PBXNativeTarget "NetFlow" */;
+			buildPhases = (
+				DE5D6BA907B480E5049F052F /* Sources */,
+				5F776BFFE2CC54EA8B30E704 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NetFlow;
+			packageProductDependencies = (
+			);
+			productName = NetFlow;
+			productReference = 0A14E0FC54CB91D7EFBE6288 /* NetFlow.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		D00000000000000000000002 /* Project object */ = {isa = PBXProject; attributes = {BuildIndependentTargetsInParallel = 1; LastSwiftUpdateCheck = 1600; LastUpgradeCheck = 1600; TargetAttributes = {D00000000000000000000005 = {CreatedOnToolsVersion = 16.0; }; }; }; buildConfigurationList = D00000000000000000000009; compatibilityVersion = "Xcode 14.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base, vi); mainGroup = D00000000000000000000003; productRefGroup = D00000000000000000000004; projectDirPath = ""; projectRoot = ""; targets = (D00000000000000000000005); };
+		C52E1182A4D9012D6EB78D7E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 42784119405FA3D8EA9F81DB /* Build configuration list for PBXProject "NetFlow" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+				vi,
+			);
+			mainGroup = B446C7C65AA5A3DF013909CD;
+			minimizedProjectReferenceProxies = 1;
+			productRefGroup = DA5D5D3D8FFB40E8E5137428 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				86D3F0629756097A5955B6A5 /* NetFlow */,
+				19EB3BDA957FAB4A1D180062 /* NetFlowTests */,
+			);
+		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		D00000000000000000000008 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (
-				A20000000000000000000001 /* Assets.xcassets in Resources */,
-				BC489C0029FE233D12E3211D /* en.lproj/Localizable.strings in Resources */,
-				17ACAC1695DCD4C77F44DD8E /* vi.lproj/Localizable.strings in Resources */,
-			); runOnlyForDeploymentPostprocessing = 0; };
+		5F776BFFE2CC54EA8B30E704 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1689C539C8CBEF3728665E2F /* Assets.xcassets in Resources */,
+				87E8332964C3C8A52BD69A32 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		D00000000000000000000006 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (
-				A10000000000000000000001 /* SystemCapabilities.swift in Sources */,
-				A10000000000000000000002 /* SystemCapabilitiesService.swift in Sources */,
-				A10000000000000000000003 /* SystemCapabilitiesView.swift in Sources */,
-				A10000000000000000000004 /* AppChrome.swift in Sources */,
-				40B986A4B04DA1316E6B0134 /* AppStore.swift in Sources */,
-				521902CA3B6BBBBC62DB2FA7 /* NetFlowApp.swift in Sources */,
-				8A359A8D84E62D35FDB66F1B /* AppSettings.swift in Sources */,
-				542DF0191ACA2810C131B99D /* DailyUsageRecord.swift in Sources */,
-				D2270CD05B2FC1D0A67EB411 /* DataPlan.swift in Sources */,
-				63D66C18AB73E0DFC9C660E4 /* NetworkModels.swift in Sources */,
-				BC9527A9ADE6C0FC9B6A5634 /* Formatters.swift in Sources */,
-				5FAC6EEEB74132BBCD72AAAB /* NetworkInterfaceReader.swift in Sources */,
-				837828955A4C7990199751CB /* PDFReportService.swift in Sources */,
-				A05DF6A196B78DA6CAAF43DD /* PersistenceService.swift in Sources */,
-				1CA042ED5DD90E6E6B21E4AE /* UsageTracker.swift in Sources */,
-				752CB43A93A37FC248AE24CE /* UsageCard.swift in Sources */,
-				40D1A72FF577054CC672548B /* DataPlanView.swift in Sources */,
-				A884142D17D4815F9779EDCC /* HistoryView.swift in Sources */,
-				7C633070DB01638B975AE4E9 /* OverviewView.swift in Sources */,
-				ECA2504668DE0828127450F0 /* RootTabView.swift in Sources */,
-				4AB6E687D2B790F2BC3AD3A8 /* SettingsView.swift in Sources */,
-			); runOnlyForDeploymentPostprocessing = 0; };
+		91507C4F635DC0682C55A788 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B537058BA665D9068531C9F9 /* AppStoreTests.swift in Sources */,
+				D11BDB9CC517858763953BEE /* DataPlanTests.swift in Sources */,
+				DB6DDE1D98A3C160AE48F694 /* PersistenceServiceTests.swift in Sources */,
+				A10B883F3A19B91ACE2867B8 /* UsageTrackerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DE5D6BA907B480E5049F052F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C933FA47C0C6F23592A5315 /* AppChrome.swift in Sources */,
+				69FB51483FDE63DD07E2F7E6 /* AppSettings.swift in Sources */,
+				228EDE607E5DCD36B97B7E93 /* AppStore.swift in Sources */,
+				CF81A868D086A2FC4D7E6438 /* DailyUsageRecord.swift in Sources */,
+				D98774FAA9EDF290950EDB5B /* DataPlan.swift in Sources */,
+				B83C0AEBE464551AB8F6EB0C /* DataPlanView.swift in Sources */,
+				A2B6DE404ACF641034CB653E /* Formatters.swift in Sources */,
+				6315AA4CE266139EB971B651 /* HistoryView.swift in Sources */,
+				304FF9D84A862007C8B4BE8A /* NetFlowApp.swift in Sources */,
+				51D6A1F5AFEEEADB713D3381 /* NetworkInterfaceReader.swift in Sources */,
+				988D23A017B7832255EDE20D /* NetworkModels.swift in Sources */,
+				B6451560C472B6D274249D24 /* OverviewView.swift in Sources */,
+				88BF570D4A7666A3BCD2E88D /* PDFReportService.swift in Sources */,
+				80FB2ED1EA3FC610E3905FC4 /* PersistenceService.swift in Sources */,
+				924429FEE7F54C5BE8277EA3 /* RootTabView.swift in Sources */,
+				79A31E915726C531395B9598 /* SettingsView.swift in Sources */,
+				9BB3906062A78AC726C06815 /* SystemCapabilities.swift in Sources */,
+				26C29F1B8D824052CD733D2A /* SystemCapabilitiesService.swift in Sources */,
+				79451DBE4DC1BEFC54A6E2DB /* SystemCapabilitiesView.swift in Sources */,
+				EAB7617EA73E7CFD22E533F3 /* UsageCard.swift in Sources */,
+				35A16B36A8168AAD7A401C43 /* UsageTracker.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4EFF36361E95C6722EEA69FD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 86D3F0629756097A5955B6A5 /* NetFlow */;
+			targetProxy = 9CAC58420B3BCB933D1ABD3A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		CDD6E81AB202F0850AED19C5 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6CBC315C8A1D15CCEBDF544B /* en */,
+				D1F27CFF0A04A2D93DE154D1 /* vi */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
-		D0000000000000000000000B = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; SDKROOT = iphoneos; IPHONEOS_DEPLOYMENT_TARGET = 16.0; }; name = Debug; };
-		D0000000000000000000000C = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; SDKROOT = iphoneos; IPHONEOS_DEPLOYMENT_TARGET = 16.0; SWIFT_COMPILATION_MODE = wholemodule; }; name = Release; };
-		D0000000000000000000000D = {isa = XCBuildConfiguration; buildSettings = {ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; CODE_SIGN_ENTITLEMENTS = NetFlow/NetFlow.entitlements; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 29; DEVELOPMENT_TEAM = ""; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = NetFlow/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 16.0; MARKETING_VERSION = 4.2.0; PRODUCT_BUNDLE_IDENTIFIER = com.duyhoang.netflow; PRODUCT_NAME = "$(TARGET_NAME)"; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_STRICT_CONCURRENCY = minimal; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; }; name = Debug; };
-		D0000000000000000000000E = {isa = XCBuildConfiguration; buildSettings = {ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; CODE_SIGN_ENTITLEMENTS = NetFlow/NetFlow.entitlements; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 29; DEVELOPMENT_TEAM = ""; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = NetFlow/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 16.0; MARKETING_VERSION = 4.2.0; PRODUCT_BUNDLE_IDENTIFIER = com.duyhoang.netflow; PRODUCT_NAME = "$(TARGET_NAME)"; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_STRICT_CONCURRENCY = minimal; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; VALIDATE_PRODUCT = YES; }; name = Release; };
+		3B6AE2B171E75E6AEB11E271 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = NetFlow/NetFlow.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 29;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NetFlow/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 4.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.duyhoang.netflow;
+				PRODUCT_NAME = NetFlow;
+				SDKROOT = iphoneos;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7AA4872AE207F389200C182A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		7AA945FD8E03F0F1F001D6ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.duyhoang.netflow.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NetFlow.app/NetFlow";
+			};
+			name = Release;
+		};
+		CAC663B0ACC6734819A69478 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = NetFlow/NetFlow.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 29;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NetFlow/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 4.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.duyhoang.netflow;
+				PRODUCT_NAME = NetFlow;
+				SDKROOT = iphoneos;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CC795959036DDAA808727577 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.duyhoang.netflow.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NetFlow.app/NetFlow";
+			};
+			name = Debug;
+		};
+		E422ED4552EE4FE75F457DF8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D00000000000000000000009 = {isa = XCConfigurationList; buildConfigurations = (D0000000000000000000000B,D0000000000000000000000C); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
-		D0000000000000000000000A = {isa = XCConfigurationList; buildConfigurations = (D0000000000000000000000D,D0000000000000000000000E); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		395C976E31A88340EF5335AD /* Build configuration list for PBXNativeTarget "NetFlow" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3B6AE2B171E75E6AEB11E271 /* Debug */,
+				CAC663B0ACC6734819A69478 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		42784119405FA3D8EA9F81DB /* Build configuration list for PBXProject "NetFlow" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7AA4872AE207F389200C182A /* Debug */,
+				E422ED4552EE4FE75F457DF8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		697664B9C5721573A0BEA1CA /* Build configuration list for PBXNativeTarget "NetFlowTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC795959036DDAA808727577 /* Debug */,
+				7AA945FD8E03F0F1F001D6ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 /* End XCConfigurationList section */
 	};
-	rootObject = D00000000000000000000002 /* Project object */;
+	rootObject = C52E1182A4D9012D6EB78D7E /* Project object */;
 }

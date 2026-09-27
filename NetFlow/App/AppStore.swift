@@ -176,8 +176,9 @@ final class AppStore: ObservableObject {
         let interval = plan.cycleInterval(containing: date)
         let measured = dailyRecords
             .filter { interval.contains($0.date) }
-            .reduce(UInt64(0)) { $0 + $1.cellularTotalBytes }
-        return measured &+ plan.manualUsedBytes
+            .reduce(UInt64(0)) { $0 &+ $1.cellularTotalBytes }
+        let manual = interval.start == plan.activeCycleStart ? plan.manualUsedBytes : 0
+        return measured &+ manual
     }
 
     func isPlanExceeded(at date: Date = Date()) -> Bool {

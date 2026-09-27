@@ -12,6 +12,8 @@ Please do not disclose a suspected vulnerability in a public issue.
 
 Use GitHub's private vulnerability reporting feature from the repository's **Security** tab when it is available. If private reporting is not enabled, contact the maintainer through the GitHub profile and request a private channel before sharing sensitive details.
 
+You can also start a private report directly from [Security advisories](https://github.com/hnduy910/NetFlow/security/advisories/new). Do not paste credentials, private network identifiers, or an exploit proof of concept into a public issue.
+
 Include:
 
 - a clear description of the issue and its impact;
@@ -28,4 +30,3 @@ Reports are reviewed as time permits. The maintainer may ask for additional deta
 ## Scope
 
 Reports about the NetFlow source code, build scripts, documentation, and repository configuration are in scope. Issues caused solely by Apple platform behavior or unrelated third-party services may need to be reported to their respective maintainers as well.
-

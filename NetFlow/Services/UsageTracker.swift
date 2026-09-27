@@ -1,8 +1,18 @@
 import Foundation
 
+protocol NetworkSnapshotReading {
+    func read() -> NetworkSnapshot
+}
+
+extension NetworkInterfaceReader: NetworkSnapshotReading {}
+
 final class UsageTracker {
-    private let reader = NetworkInterfaceReader()
+    private let reader: any NetworkSnapshotReading
     private var previous: NetworkSnapshot?
+
+    init(reader: any NetworkSnapshotReading = NetworkInterfaceReader()) {
+        self.reader = reader
+    }
 
     struct SampleResult {
         var snapshot: NetworkSnapshot

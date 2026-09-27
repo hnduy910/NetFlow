@@ -1,7 +1,9 @@
 name: Build unsigned release IPA
 
 on:
-  push:
+  workflow_run:
+    workflows: [iOS CI]
+    types: [completed]
     branches: [main]
   workflow_dispatch:
 
@@ -10,9 +12,17 @@ permissions:
 
 jobs:
   release:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
     runs-on: macos-15
+    concurrency:
+      group: netflow-release-${{ github.event.workflow_run.head_sha || github.sha }}
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Resolve release version
         id: meta
@@ -62,14 +72,15 @@ jobs:
         if: steps.meta.outputs.exists != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
+          COMMIT: ${{ github.event.workflow_run.head_sha || github.sha }}
         run: |
           TAG="${{ steps.meta.outputs.tag }}"
           VERSION="${{ steps.meta.outputs.version }}"
           BUILD="${{ steps.meta.outputs.build }}"
-          git tag "${TAG}" "$GITHUB_SHA"
+          git tag "${TAG}" "$COMMIT"
           git push origin "${TAG}"
           gh release create "${TAG}" \
-            --target "$GITHUB_SHA" \
+            --target "$COMMIT" \
             --title "NetFlow ${VERSION} (Build ${BUILD})" \
             --generate-notes \
             "NetFlow_Universal_${TAG}.ipa" \

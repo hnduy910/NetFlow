@@ -78,7 +78,23 @@ bash Tools/check_project.sh
 
 ## Releases
 
-GitHub Releases provide source snapshots and an automatically built **unsigned IPA**. Unsigned IPAs require an appropriate sideloading/signing method before installation on a normal device.
+GitHub [Releases](https://github.com/hnduy910/NetFlow/releases) provide source snapshots and an automatically built **unsigned IPA** after the main-branch CI workflow passes. Unsigned IPAs require an appropriate sideloading/signing method before installation on a normal device; they are not App Store builds and are not guaranteed to install without signing.
+
+## Test locally
+
+The repository includes XCTest coverage for plan-cycle boundaries, forecast calculations, counter-reset handling, midnight aggregation, persistence, backup/restore, and CSV output.
+
+```bash
+bash Tools/check_project.sh
+xcodebuild \
+  -project NetFlow.xcodeproj \
+  -scheme NetFlow \
+  -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+  CODE_SIGNING_ALLOWED=NO \
+  test
+```
+
+Some networking behavior (cellular counters, VPN interfaces, carrier information, and location services) still requires validation on a physical device.
 
 ## Repository layout
 
@@ -99,6 +115,16 @@ Tools/
 Bug reports, documentation improvements, focused feature proposals, and pull requests are welcome. Good first contributions include localization improvements, accessibility fixes, test coverage, and small UI refinements.
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md), [ROADMAP.md](ROADMAP.md), [MAINTAINERS.md](MAINTAINERS.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), and [SECURITY.md](SECURITY.md) before contributing.
+
+<table>
+<tr>
+<td>🐛 <a href="https://github.com/hnduy910/NetFlow/issues/new?template=bug_report.yml">Report a bug</a></td>
+<td>💡 <a href="https://github.com/hnduy910/NetFlow/issues/new?template=feature_request.yml">Request a feature</a></td>
+<td>🤝 <a href="CONTRIBUTING.md">Contribute</a></td>
+</tr>
+</table>
+
+If NetFlow is useful to you, a GitHub star is welcome. Please report bugs and ideas as issues instead of using stars as a support channel.
 
 ## License
 

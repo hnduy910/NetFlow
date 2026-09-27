@@ -59,7 +59,11 @@ struct DataPlan: Codable, Hashable {
     var triggeredAlertIDs: Set<String> = []
 
     var isUnlimited: Bool { cycleType == .unlimited }
-    var effectiveCapacityBytes: UInt64 { isUnlimited ? UInt64.max : capacityBytes + carriedBytes }
+    var effectiveCapacityBytes: UInt64 {
+        guard !isUnlimited else { return UInt64.max }
+        let (capacity, overflow) = capacityBytes.addingReportingOverflow(carriedBytes)
+        return overflow ? UInt64.max : capacity
+    }
 
     func displayName(locale: Locale) -> String {
         (name == Self.defaultName || name == Self.legacyDefaultName)
@@ -74,21 +78,35 @@ struct DataPlan: Codable, Hashable {
         case .daily:
             return DateInterval(start: startOfDay, end: cal.date(byAdding: .day, value: 1, to: startOfDay)!)
         case .monthly:
-            var comps = cal.dateComponents([.year, .month], from: date)
-            let maxDay = cal.range(of: .day, in: .month, for: date)?.count ?? 28
-            comps.day = min(monthlyResetDay, maxDay)
-            var start = cal.date(from: comps) ?? startOfDay
-            if date < start {
-                start = cal.date(byAdding: .month, value: -1, to: start)!
+            let monthStart = cal.date(from: cal.dateComponents([.year, .month], from: date)) ?? startOfDay
+            let currentBoundary = monthlyBoundary(containingMonth: monthStart, calendar: cal) ?? monthStart
+            let start: Date
+            if date < currentBoundary {
+                let previousMonth = cal.date(byAdding: .month, value: -1, to: monthStart) ?? monthStart
+                start = monthlyBoundary(containingMonth: previousMonth, calendar: cal) ?? previousMonth
+            } else {
+                start = currentBoundary
             }
-            return DateInterval(start: start, end: cal.date(byAdding: .month, value: 1, to: start)!)
+            let startMonth = cal.date(from: cal.dateComponents([.year, .month], from: start)) ?? start
+            let nextMonth = cal.date(byAdding: .month, value: 1, to: startMonth) ?? startMonth
+            let end = monthlyBoundary(containingMonth: nextMonth, calendar: cal)
+                ?? cal.date(byAdding: .month, value: 1, to: startMonth)!
+            return DateInterval(start: start, end: end)
         case .yearly:
-            var comps = cal.dateComponents([.year], from: date)
-            comps.month = yearlyResetMonth
-            comps.day = yearlyResetDay
-            var start = cal.date(from: comps) ?? startOfDay
-            if date < start { start = cal.date(byAdding: .year, value: -1, to: start)! }
-            return DateInterval(start: start, end: cal.date(byAdding: .year, value: 1, to: start)!)
+            let yearStart = cal.date(from: cal.dateComponents([.year], from: date)) ?? startOfDay
+            let currentBoundary = yearlyBoundary(containingYear: yearStart, calendar: cal) ?? yearStart
+            let start: Date
+            if date < currentBoundary {
+                let previousYear = cal.date(byAdding: .year, value: -1, to: yearStart) ?? yearStart
+                start = yearlyBoundary(containingYear: previousYear, calendar: cal) ?? previousYear
+            } else {
+                start = currentBoundary
+            }
+            let startYear = cal.date(from: cal.dateComponents([.year], from: start)) ?? start
+            let nextYear = cal.date(byAdding: .year, value: 1, to: startYear) ?? startYear
+            let end = yearlyBoundary(containingYear: nextYear, calendar: cal)
+                ?? cal.date(byAdding: .year, value: 1, to: startYear)!
+            return DateInterval(start: start, end: end)
         case .custom:
             let days = max(customDays, 1)
             let elapsed = cal.dateComponents([.day], from: cal.startOfDay(for: cycleAnchor), to: startOfDay).day ?? 0
@@ -104,8 +122,13 @@ struct DataPlan: Codable, Hashable {
     func remainingBytes(records: [DailyUsageRecord], at date: Date = Date()) -> UInt64 {
         guard !isUnlimited else { return UInt64.max }
         let interval = cycleInterval(containing: date)
-        let used = records.filter { interval.contains($0.date) }.reduce(0) { $0 + $1.cellularTotalBytes } + manualUsedBytes
-        return effectiveCapacityBytes > used ? effectiveCapacityBytes - used : 0
+        let measured = records
+            .filter { interval.contains($0.date) }
+            .reduce(UInt64(0)) { $0 &+ $1.cellularTotalBytes }
+        let manual = interval.start == activeCycleStart ? manualUsedBytes : 0
+        let used = measured &+ manual
+        let capacity = interval.start == activeCycleStart ? effectiveCapacityBytes : capacityBytes
+        return capacity > used ? capacity - used : 0
     }
 
     func forecast(records: [DailyUsageRecord], at date: Date = Date()) -> UsageForecast? {
@@ -116,7 +139,8 @@ struct DataPlan: Codable, Hashable {
         let measured = records
             .filter { interval.contains($0.date) && $0.date <= boundedNow }
             .reduce(UInt64(0)) { $0 &+ $1.cellularTotalBytes }
-        let used = measured &+ manualUsedBytes
+        let manual = interval.start == activeCycleStart ? manualUsedBytes : 0
+        let used = measured &+ manual
 
         // Use at least one day as the observation window so a few minutes of
         // early-cycle traffic do not produce an unrealistically large forecast.
@@ -137,8 +161,29 @@ struct DataPlan: Codable, Hashable {
             usedBytes: used,
             averageDailyBytes: average,
             projectedBytes: projected,
-            capacityBytes: effectiveCapacityBytes,
+            capacityBytes: interval.start == activeCycleStart ? effectiveCapacityBytes : capacityBytes,
             cycleEnd: interval.end
         )
+    }
+
+    private func monthlyBoundary(containingMonth month: Date, calendar cal: Calendar) -> Date? {
+        let monthStart = cal.date(from: cal.dateComponents([.year, .month], from: month)) ?? month
+        let monthComponents = cal.dateComponents([.year, .month], from: monthStart)
+        let monthEnd = cal.date(byAdding: DateComponents(month: 1, day: -1), to: monthStart)
+        let lastDay = monthEnd.map { cal.component(.day, from: $0) } ?? 28
+        var components = monthComponents
+        components.day = min(max(monthlyResetDay, 1), lastDay)
+        return cal.date(from: components)
+    }
+
+    private func yearlyBoundary(containingYear year: Date, calendar cal: Calendar) -> Date? {
+        let yearComponents = cal.dateComponents([.year], from: year)
+        var components = yearComponents
+        components.month = min(max(yearlyResetMonth, 1), 12)
+        let monthStart = cal.date(from: components)
+        let monthEnd = monthStart.flatMap { cal.date(byAdding: DateComponents(month: 1, day: -1), to: $0) }
+        let lastDay = monthEnd.map { cal.component(.day, from: $0) } ?? 28
+        components.day = min(max(yearlyResetDay, 1), lastDay)
+        return cal.date(from: components)
     }
 }

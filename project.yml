@@ -1,5 +1,7 @@
 name: NetFlow
 options:
+  developmentLanguage: en
+  projectFormat: xcode15_0
   deploymentTarget:
     iOS: "16.0"
   xcodeVersion: "15.0"
@@ -12,9 +14,10 @@ targets:
       - path: NetFlow
         excludes:
           - Preview
-          - Resources
     resources:
-      - path: NetFlow/Resources
+      - path: NetFlow/Resources/Assets.xcassets
+      - path: NetFlow/Resources/en.lproj
+      - path: NetFlow/Resources/vi.lproj
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.duyhoang.netflow
@@ -30,3 +33,56 @@ targets:
         INFOPLIST_FILE: NetFlow/Info.plist
     info:
       path: NetFlow/Info.plist
+      properties:
+        CFBundleDevelopmentRegion: en
+        CFBundleDisplayName: NetFlow
+        CFBundleShortVersionString: 4.2.0
+        CFBundleVersion: "29"
+        CFBundleIconName: AppIcon
+        CFBundleIcons:
+          CFBundlePrimaryIcon:
+            CFBundleIconFiles:
+              - AppIcon60x60
+              - AppIcon76x76
+            CFBundleIconName: AppIcon
+        CFBundleIcons~ipad:
+          CFBundlePrimaryIcon:
+            CFBundleIconFiles:
+              - AppIcon76x76
+              - AppIcon83.5x83.5
+            CFBundleIconName: AppIcon
+        CFBundleLocalizations:
+          - en
+          - vi
+        ITSAppUsesNonExemptEncryption: false
+        LSRequiresIPhoneOS: true
+        NSLocalNetworkUsageDescription: NetFlow reads local network details to display connection information.
+        NSLocationWhenInUseUsageDescription: NetFlow uses your current location to display local weather for your area.
+        NetFlowBuildDate: 22/09/2026
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        UIApplicationSupportsIndirectInputEvents: true
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+  NetFlowTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: NetFlowTests
+    dependencies:
+      - target: NetFlow
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.duyhoang.netflow.tests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/NetFlow.app/NetFlow"
+        BUNDLE_LOADER: "$(TEST_HOST)"

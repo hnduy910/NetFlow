@@ -1,0 +1,12 @@
+.DS_Store
+
+# Xcode user and build state
+build/
+.build/
+DerivedData/
+xcuserdata/
+*.xcuserstate
+
+# Local distribution artifacts belong in GitHub Releases, not source history.
+*.ipa
+*.ipa.sha256

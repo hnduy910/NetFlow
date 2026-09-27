@@ -18,6 +18,22 @@ Thank you for taking the time to improve NetFlow. Bug reports, documentation fix
 
 NetFlow uses Apple's native frameworks and does not require CocoaPods or third-party packages. Network values, Wi-Fi information, background refresh, and entitlements can behave differently on a Simulator; validate device-specific behavior on a physical device when needed.
 
+## Automated validation
+
+Run the static checks and XCTest suite before opening a pull request:
+
+```bash
+bash Tools/check_project.sh
+xcodebuild \
+  -project NetFlow.xcodeproj \
+  -scheme NetFlow \
+  -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+  CODE_SIGNING_ALLOWED=NO \
+  test
+```
+
+The same checks run on GitHub Actions for pushes to `main` and pull requests. The CI workflow must pass before the release workflow can publish an unsigned IPA.
+
 ## Development workflow
 
 1. Fork the repository and create a focused branch from `main`.
@@ -27,6 +43,8 @@ NetFlow uses Apple's native frameworks and does not require CocoaPods or third-p
 5. Build the app and test the affected flow on an appropriate Simulator or device.
 6. Update the README or screenshots when a user-visible feature changes.
 7. Open a pull request with a concise summary, testing notes, and screenshots for UI changes.
+
+Please keep pull requests focused. A maintainer review is required for changes to app behavior, security-sensitive code, or release automation.
 
 ## Pull request checklist
 
@@ -40,4 +58,3 @@ NetFlow uses Apple's native frameworks and does not require CocoaPods or third-p
 ## Bug reports and feature requests
 
 Include the device or Simulator model, iOS version, Xcode version, exact steps to reproduce, and any relevant console output. Redact identifiers and private data before attaching logs or screenshots.
-

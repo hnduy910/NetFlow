@@ -54,7 +54,7 @@ struct DataPlanView: View {
                         Toggle("rollover", isOn: $store.plan.rolloverEnabled)
 
                         if store.plan.cycleType == .monthly {
-                            Stepper(value: $store.plan.monthlyResetDay, in: 1...28) {
+                            Stepper(value: $store.plan.monthlyResetDay, in: 1...31) {
                                 Text("\(AppLocalization.string("reset_day", locale: appLocale)) \(store.plan.monthlyResetDay)")
                             }
                         }
@@ -62,7 +62,7 @@ struct DataPlanView: View {
                             Stepper(value: $store.plan.yearlyResetMonth, in: 1...12) {
                                 Text("\(AppLocalization.string("reset_month", locale: appLocale)) \(store.plan.yearlyResetMonth)")
                             }
-                            Stepper(value: $store.plan.yearlyResetDay, in: 1...28) {
+                            Stepper(value: $store.plan.yearlyResetDay, in: 1...31) {
                                 Text("\(AppLocalization.string("reset_day", locale: appLocale)) \(store.plan.yearlyResetDay)")
                             }
                         }
