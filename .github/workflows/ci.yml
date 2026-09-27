@@ -13,7 +13,7 @@ jobs:
   validate:
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Static project checks
         run: bash Tools/check_project.sh
       - name: Build for iOS Simulator
